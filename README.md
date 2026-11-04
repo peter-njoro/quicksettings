@@ -1,0 +1,152 @@
+# Quick Settings
+
+A modern, glass-inspired control panel for KDE Plasma 6. Quick Settings keeps
+frequently used desktop controls in one place: connectivity, brightness,
+volume, media playback, focus mode, appearance, battery and power management.
+
+Screenshots are captured from a live Plasma session; see
+[screenshots/README.md](screenshots/README.md) for the required set.
+
+## Features
+
+- Native Plasma 6 panel applet with a compact, animated panel icon.
+- Floating, rounded glass panel with translucent cards and blur where KWin
+  supports it.
+- Light and dark appearance, with the system accent colour by default.
+- Live system state for Wi-Fi, Bluetooth, volume, screen brightness, media,
+  notifications and battery.
+- Expanded connectivity, audio and power views inside the same popup.
+- Per-module visibility, spacing, transparency, corner radius, animation and
+  quick-action configuration.
+- QML-only implementation: no compiled plugin and no root privileges required.
+
+## Requirements
+
+- KDE Plasma 6.0 or newer (developed against Plasma 6.6).
+- Qt 6 and the Plasma QML components (`plasma-workspace`, `libplasma`).
+- The standard Plasma integration modules used by the desktop:
+  - NetworkManager and `plasma-nm` for Wi-Fi.
+  - BlueZ and `bluez-qt` for Bluetooth.
+  - PipeWire or PulseAudio through `plasma-pa`.
+  - MPRIS for media players.
+  - UPower / PowerDevil for battery and power profiles.
+- `plasma-apply-colorscheme` from `plasma-workspace` for light/dark switching.
+
+All integrations are optional at runtime. Missing hardware or services result
+in an unavailable state instead of a broken widget.
+
+## Installation
+
+From this repository:
+
+```bash
+kpackagetool6 -t Plasma/Applet -i package/
+```
+
+To update an installed development copy:
+
+```bash
+kpackagetool6 -t Plasma/Applet -u package/
+```
+
+To remove it:
+
+```bash
+kpackagetool6 -t Plasma/Applet -r com.github.peterchege.quicksettings
+```
+
+Then right-click your panel, choose **Enter Edit Mode → Add Widgets**, search
+for **Quick Settings**, and place it on the panel.
+
+During development you can preview the applet with the Plasma SDK:
+
+```bash
+plasmoidviewer -a com.github.peterchege.quicksettings
+```
+
+## Packaging
+
+Create the distributable archive from the project root:
+
+```bash
+./scripts/package.sh
+```
+
+This produces `quick-settings-<version>.plasmoid` in the project root. The
+archive contains only the contents of `package/`, not the development files.
+
+## Configuration
+
+Open the widget menu (three dots) and choose **Configure Quick Settings…**, or
+right-click the applet and choose **Configure**. Configuration is stored with
+KConfig and persists between sessions.
+
+Available settings include:
+
+- Automatic, light or dark appearance; accent colour following.
+- Transparency, blur, corner radius, compact spacing and animations.
+- Visibility of each module (Wi-Fi, Bluetooth, brightness, volume, focus,
+  appearance, media, battery and quick actions).
+- Header date visibility and whether the popup remembers the last view.
+- Individual quick actions for System Settings, lock screen, display, power,
+  network, Bluetooth and audio settings.
+
+## Development
+
+Validate the QML sources:
+
+```bash
+./scripts/lint.sh
+```
+
+Useful Plasma tools:
+
+```bash
+kpackagetool6 -t Plasma/Applet -i package/
+plasmoidviewer -a com.github.peterchege.quicksettings
+```
+
+### Architecture
+
+```text
+package/
+├── metadata.json
+└── contents/
+    ├── config/          # KConfig XT definition and configuration UI
+    └── ui/              # Applet entry point, views and reusable components
+```
+
+System integration is intentionally isolated per component so it can be tested
+independently. The widget prefers supported Plasma QML APIs and KDE settings
+modules over shell commands. Where a stable API does not exist, it uses the
+official KDE utility for that task (for example
+`plasma-apply-colorscheme` for appearance switching).
+
+## Troubleshooting
+
+- **The widget does not appear:** confirm the package structure and reinstall
+  with `kpackagetool6 -t Plasma/Applet -u package/`.
+- **Blur is unavailable:** the interface remains readable with an opaque
+  fallback; blur depends on the compositor and Plasma theme.
+- **A card shows unavailable:** the required service or hardware is missing.
+  Verify NetworkManager, BlueZ, PipeWire/PulseAudio, UPower and PowerDevil are
+  running.
+- **Media controls are empty:** start an MPRIS-compatible player and make sure
+  it exposes the MPRIS D-Bus interface.
+- **QML errors while developing:** run `./scripts/lint.sh` and check the
+  Plasma session log (`journalctl --user -b -u plasma-plasmashell`).
+
+## Screenshots
+
+The `screenshots/` directory contains a note describing the screenshots that
+must be captured from a live Plasma session before publication. Screenshots
+are not fabricated; they should show the real widget.
+
+## License
+
+GPL-3.0-or-later. See [LICENSE](LICENSE).
+
+## Contributing
+
+Bug reports and merge requests are welcome at
+<https://github.com/peterchege/quicksettings>.

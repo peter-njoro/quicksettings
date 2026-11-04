@@ -1,0 +1,21 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Peter Chege",
+                "Email": "peterchegen12@gmail.com"
+            }
+        ],
+        "Category": "Utilities",
+        "Description": "A modern glass-inspired control panel for frequently used desktop settings.",
+        "Icon": "preferences-system",
+        "Id": "com.github.peterchege.quicksettings",
+        "License": "GPL-3.0-or-later",
+        "Name": "Quick Settings",
+        "Version": "1.0.0",
+        "Website": "https://github.com/peterchege/quicksettings",
+        "BugReportUrl": "https://github.com/peterchege/quicksettings/issues"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0"
+}

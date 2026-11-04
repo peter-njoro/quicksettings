@@ -1,0 +1,17 @@
+# Build and packaging artifacts
+*.plasmoid
+*.zip
+*.tar.gz
+build/
+dist/
+
+# Editor and OS files
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+
+# Logs and local test output
+*.log
+qmllint.log

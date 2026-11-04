@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+SPDX-FileCopyrightText: 2026 Peter Chege <peterchegen12@gmail.com>
+SPDX-License-Identifier: GPL-3.0-or-later
+-->
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+    <kcfgfile name=""/>
+    <group name="General">
+        <entry name="appearance" type="String">
+            <default>automatic</default>
+        </entry>
+        <entry name="transparency" type="Int">
+            <default>85</default>
+            <min>0</min>
+            <max>100</max>
+        </entry>
+        <entry name="blur" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="cornerRadius" type="Int">
+            <default>22</default>
+            <min>0</min>
+            <max>40</max>
+        </entry>
+        <entry name="compactSpacing" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="animations" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="followAccent" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="showHeaderDate" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="showMedia" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="rememberView" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="showWifi" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="showBluetooth" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="showBrightness" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="showVolume" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="showFocus" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="showAppearance" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="showBattery" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="showQuickActions" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="quickActionSystemSettings" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="quickActionLock" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="quickActionDisplay" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="quickActionPower" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="quickActionNetwork" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="quickActionBluetooth" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="quickActionAudio" type="Bool">
+            <default>false</default>
+        </entry>
+    </group>
+</kcfg>
