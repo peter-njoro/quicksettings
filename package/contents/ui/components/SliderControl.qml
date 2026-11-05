@@ -3,6 +3,7 @@
 
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls as QQC2
 
 import org.kde.plasma.components as PlasmaComponents3
 import org.kde.kirigami as Kirigami
@@ -65,10 +66,16 @@ ColumnLayout {
         }
     }
 
-    PlasmaComponents3.Slider {
+    QQC2.Slider {
         id: slider
 
         Layout.fillWidth: true
+        implicitHeight: 28
+        leftPadding: 8
+        rightPadding: 8
+        topPadding: 6
+        bottomPadding: 6
+        snapMode: QQC2.Slider.SnapOnRelease
         enabled: root.interactive
         from: root.from
         to: root.to
