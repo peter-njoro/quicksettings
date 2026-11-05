@@ -9,18 +9,18 @@ ConfigModel {
     ConfigCategory {
         name: i18n("Appearance")
         icon: "preferences-desktop-color"
-        source: "configGeneral.qml"
+        source: "../config/configGeneral.qml"
     }
 
     ConfigCategory {
         name: i18n("Sections")
         icon: "view-list-details"
-        source: "configSections.qml"
+        source: "../config/configSections.qml"
     }
 
     ConfigCategory {
         name: i18n("Quick Actions")
         icon: "view-grid"
-        source: "configQuickActions.qml"
+        source: "../config/configQuickActions.qml"
     }
 }
