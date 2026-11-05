@@ -52,10 +52,27 @@ Item {
         border.color: root.t.border
     }
 
-    StackLayout {
+    Loader {
+        id: pageLoader
+
         anchors.fill: parent
         anchors.margins: root.t.compact ? root.t.spacing : root.t.spacing * 1.25
-        currentIndex: root.currentPage
+        sourceComponent: {
+            switch (root.currentPage) {
+            case 1:
+                return connectivityPage;
+            case 2:
+                return audioPage;
+            case 3:
+                return powerPage;
+            default:
+                return mainPage;
+            }
+        }
+    }
+
+    Component {
+        id: mainPage
 
         Item {
             ColumnLayout {
@@ -85,14 +102,17 @@ Item {
 
                         RowLayout {
                             Layout.fillWidth: true
+                            Layout.minimumWidth: 0
+                            Layout.minimumHeight: connectivityColumn.implicitHeight
                             visible: connectivityColumn.visible
                                 || (root.cfg.showMedia !== false)
 
                             ColumnLayout {
                                 id: connectivityColumn
 
-                                Layout.fillWidth: true
-                                Layout.fillHeight: true
+                                Layout.minimumWidth: 0
+                                Layout.preferredWidth: Math.max(0,
+                                    (mainScroll.availableWidth - root.t.spacing) * 0.46)
                                 spacing: root.t.spacing
                                 visible: wifiCard.visible || bluetoothCard.visible
 
@@ -100,7 +120,7 @@ Item {
                                     id: wifiCard
 
                                     Layout.fillWidth: true
-                                    Layout.fillHeight: true
+                                    Layout.minimumWidth: 0
                                     visible: root.cfg.showWifi !== false
                                     theme: root.t
                                     kind: "wifi"
@@ -111,7 +131,7 @@ Item {
                                     id: bluetoothCard
 
                                     Layout.fillWidth: true
-                                    Layout.fillHeight: true
+                                    Layout.minimumWidth: 0
                                     visible: root.cfg.showBluetooth !== false
                                     theme: root.t
                                     kind: "bluetooth"
@@ -121,7 +141,11 @@ Item {
 
                             MediaCard {
                                 Layout.fillWidth: true
-                                Layout.fillHeight: true
+                                Layout.minimumWidth: 0
+                                Layout.minimumHeight: connectivityColumn.implicitHeight
+                                Layout.preferredWidth: Math.max(0,
+                                    (mainScroll.availableWidth - root.t.spacing) * 0.54)
+                                Layout.preferredHeight: connectivityColumn.implicitHeight
                                 visible: root.cfg.showMedia !== false
                                 theme: root.t
                             }
@@ -236,18 +260,30 @@ Item {
                 }
             }
         }
+    }
+
+    Component {
+        id: connectivityPage
 
         ConnectivityDetailsView {
             theme: root.t
             configuration: root.cfg
             onBackRequested: root.currentPage = 0
         }
+    }
+
+    Component {
+        id: audioPage
 
         AudioDetailsView {
             theme: root.t
             configuration: root.cfg
             onBackRequested: root.currentPage = 0
         }
+    }
+
+    Component {
+        id: powerPage
 
         PowerDetailsView {
             theme: root.t
