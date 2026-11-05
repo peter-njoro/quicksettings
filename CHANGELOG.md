@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Microphone volume and mute controls in the audio details view.
+- Open the audio details view by clicking the volume card.
 - Animation speed and close-on-outside-click settings.
 - Opaque card fallback when the translucent glass effect is disabled.
 

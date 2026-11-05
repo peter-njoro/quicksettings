@@ -107,6 +107,8 @@ Item {
                             Layout.fillWidth: true
                             visible: root.cfg.showVolume !== false && volumeControl.available
                             theme: root.t
+                            interactive: volumeControl.available
+                            onClicked: root.currentPage = 2
 
                             VolumeControl {
                                 id: volumeControl
