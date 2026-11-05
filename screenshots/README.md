@@ -8,7 +8,7 @@ Screenshots are generated from the real QML sources; no mockups are used.
 4. `audio.png` — the expanded audio view (420 × 760).
 5. `power.png` — the expanded power view (420 × 340).
 
-The main views were captured from a live `plasmawindowed` instance under
-XWayland. Expanded views were rendered with the same QML sources using an
-offscreen Qt Quick harness. Keep the panel position, accent colour and
-wallpaper consistent when refreshing the set.
+All five images were rendered from the same QML sources with an offscreen
+Qt Quick harness; the live widget was also verified in `plasmawindowed` under
+XWayland. Keep the accent colour and desktop wallpaper consistent when
+refreshing the set.
