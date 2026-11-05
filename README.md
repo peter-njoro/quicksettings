@@ -4,8 +4,10 @@ A modern, glass-inspired control panel for KDE Plasma 6. Quick Settings keeps
 frequently used desktop controls in one place: connectivity, brightness,
 volume, media playback, focus mode, appearance, battery and power management.
 
-Screenshots are captured from a live Plasma session; see
-[screenshots/README.md](screenshots/README.md) for the required set.
+![Quick Settings main panel](screenshots/main-light.png)
+
+Screenshots show the real widget; see [screenshots/README.md](screenshots/README.md)
+for the full set and capture notes.
 
 ## Features
 
@@ -64,6 +66,12 @@ During development you can preview the applet with the Plasma SDK:
 plasmoidviewer -a com.github.peterchege.quicksettings
 ```
 
+If `plasmoidviewer` is unavailable, use the windowed preview:
+
+```bash
+plasmawindowed com.github.peterchege.quicksettings
+```
+
 ## Packaging
 
 Create the distributable archive from the project root:
@@ -106,6 +114,7 @@ Useful Plasma tools:
 ```bash
 kpackagetool6 -t Plasma/Applet -i package/
 plasmoidviewer -a com.github.peterchege.quicksettings
+plasmawindowed com.github.peterchege.quicksettings
 ```
 
 ### Architecture
@@ -141,9 +150,15 @@ official KDE utility for that task (for example
 
 ## Screenshots
 
-The `screenshots/` directory contains a note describing the screenshots that
-must be captured from a live Plasma session before publication. Screenshots
-are not fabricated; they should show the real widget.
+| Main panel (light) | Main panel (dark) |
+| --- | --- |
+| ![Main panel, light](screenshots/main-light.png) | ![Main panel, dark](screenshots/main-dark.png) |
+
+| Connectivity | Audio | Power |
+| --- | --- | --- |
+| ![Connectivity details](screenshots/connectivity.png) | ![Audio details](screenshots/audio.png) | ![Power details](screenshots/power.png) |
+
+All screenshots are rendered from the actual QML sources; no mockups are used.
 
 ## License
 
