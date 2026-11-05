@@ -8,7 +8,7 @@ import QtQuick.Layouts
 import org.kde.kcmutils as KCM
 import org.kde.kirigami as Kirigami
 
-KCM.ScrollViewKCM {
+KCM.SimpleKCM {
     id: page
 
     property alias cfg_appearance: appearanceCombo.currentValue
@@ -23,7 +23,7 @@ KCM.ScrollViewKCM {
     property alias cfg_closeOnOutsideClick: closeOnOutsideClickCheck.checked
     property alias cfg_showHeaderDate: showHeaderDateCheck.checked
 
-    header: Kirigami.FormLayout {
+    Kirigami.FormLayout {
         QQC2.ComboBox {
             id: appearanceCombo
 
@@ -37,7 +37,6 @@ KCM.ScrollViewKCM {
                 { text: i18n("Light"), value: "light" }
             ]
 
-            Component.onCompleted: currentIndex = indexOfValue(plasmoid.configuration.appearance)
         }
 
         RowLayout {

@@ -95,7 +95,7 @@ Available settings include:
 - Transparency, glass effect, corner radius, compact spacing, animations and
   animation speed.
 - Visibility of each module (Wi-Fi, Bluetooth, brightness, volume, focus,
-  appearance, media, battery and quick actions).
+  appearance, Night Light, media, battery and quick actions).
 - Header date visibility, close-on-outside-click and whether the popup
   remembers the last view.
 - Individual quick actions for System Settings, lock screen, display, power,

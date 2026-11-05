@@ -30,15 +30,8 @@ PlasmoidItem {
     fullRepresentation: MainView {
         dark: root.dark
         configuration: plasmoid.configuration
+        onConfigureRequested: Plasmoid.internalAction("configure").trigger()
     }
-
-    Plasmoid.contextualActions: [
-        PlasmaCore.Action {
-            text: i18n("Configure Quick Settings…")
-            icon.name: "configure"
-            onTriggered: Plasmoid.internalAction("configure").trigger()
-        }
-    ]
 
     Connections {
         target: root

@@ -7,7 +7,7 @@ import QtQuick.Controls as QQC2
 import org.kde.kcmutils as KCM
 import org.kde.kirigami as Kirigami
 
-KCM.ScrollViewKCM {
+KCM.SimpleKCM {
     id: page
 
     property alias cfg_quickActionSystemSettings: systemSettingsCheck.checked
@@ -18,7 +18,7 @@ KCM.ScrollViewKCM {
     property alias cfg_quickActionBluetooth: bluetoothCheck.checked
     property alias cfg_quickActionAudio: audioCheck.checked
 
-    header: Kirigami.FormLayout {
+    Kirigami.FormLayout {
         QQC2.CheckBox {
             id: systemSettingsCheck
 

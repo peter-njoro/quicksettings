@@ -17,6 +17,8 @@ Item {
     property var theme
     property bool showDate: true
 
+    signal configureRequested()
+
     readonly property var t: theme || fallbackTheme
 
     Components.Theme { id: fallbackTheme }
@@ -64,7 +66,7 @@ Item {
                 QQC2.MenuItem {
                     text: i18n("Configure Quick Settings…")
                     icon.name: "configure"
-                    onTriggered: Plasmoid.internalAction("configure").trigger()
+                    onTriggered: root.configureRequested()
                 }
 
                 QQC2.MenuItem {

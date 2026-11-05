@@ -17,6 +17,8 @@ Item {
     property var configuration: null
     property var theme: null
 
+    signal configureRequested()
+
     readonly property var cfg: configuration || plasmoid.configuration
     readonly property var t: theme || localTheme
 
@@ -83,6 +85,7 @@ Item {
                     Layout.fillWidth: true
                     theme: root.t
                     showDate: root.cfg.showHeaderDate !== false
+                    onConfigureRequested: root.configureRequested()
                 }
 
                 PlasmaComponents3.ScrollView {
@@ -229,7 +232,7 @@ Item {
                     Layout.alignment: Qt.AlignHCenter
                     text: i18n("Edit Controls")
                     icon.name: "configure"
-                    onClicked: Plasmoid.internalAction("configure").trigger()
+                    onClicked: root.configureRequested()
 
                     contentItem: RowLayout {
                         spacing: Kirigami.Units.smallSpacing

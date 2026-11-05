@@ -7,7 +7,7 @@ import QtQuick.Controls as QQC2
 import org.kde.kcmutils as KCM
 import org.kde.kirigami as Kirigami
 
-KCM.ScrollViewKCM {
+KCM.SimpleKCM {
     id: page
 
     property alias cfg_showWifi: wifiCheck.checked
@@ -16,11 +16,12 @@ KCM.ScrollViewKCM {
     property alias cfg_showVolume: volumeCheck.checked
     property alias cfg_showFocus: focusCheck.checked
     property alias cfg_showAppearance: appearanceCheck.checked
+    property alias cfg_showNightLight: nightLightCheck.checked
     property alias cfg_showMedia: mediaCheck.checked
     property alias cfg_showBattery: batteryCheck.checked
     property alias cfg_showQuickActions: quickActionsCheck.checked
 
-    header: Kirigami.FormLayout {
+    Kirigami.FormLayout {
         QQC2.CheckBox {
             id: wifiCheck
 
@@ -55,6 +56,12 @@ KCM.ScrollViewKCM {
             id: appearanceCheck
 
             text: i18n("Appearance")
+        }
+
+        QQC2.CheckBox {
+            id: nightLightCheck
+
+            text: i18n("Night Light")
         }
 
         QQC2.CheckBox {
