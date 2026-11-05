@@ -16,7 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Use the native Plasma popup background and keep the glass treatment on cards.
+- Keep the native Plasma popup frame and draw a translucent glass panel over it.
+- Keep the glass panel coherent when forcing light or dark appearance.
 - Keep sliders in sync with external state changes without fighting user drags.
 - Correct power settings shortcuts to the installed PowerDevil KCM.
 

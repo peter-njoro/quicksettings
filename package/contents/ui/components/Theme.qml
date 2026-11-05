@@ -21,8 +21,8 @@ QtObject {
 
     readonly property color accent: followAccent ? Kirigami.Theme.highlightColor : "#3daee9"
     readonly property color background: dark
-        ? Qt.rgba(0.09, 0.10, 0.12, 0.62 * glassStrength)
-        : Qt.rgba(0.98, 0.98, 0.99, 0.72 * glassStrength)
+        ? Qt.rgba(0.09, 0.10, 0.12, blur ? 0.85 * glassStrength : 0.97)
+        : Qt.rgba(0.98, 0.98, 0.99, blur ? 0.85 * glassStrength : 0.97)
     readonly property color card: dark
         ? Qt.rgba(0.16, 0.17, 0.20, blur ? 0.60 * glassStrength : 0.97)
         : Qt.rgba(1.0, 1.0, 1.0, blur ? 0.62 * glassStrength : 0.97)

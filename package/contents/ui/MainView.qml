@@ -40,6 +40,14 @@ Item {
         compact: root.cfg.compactSpacing === true
     }
 
+    Rectangle {
+        anchors.fill: parent
+        radius: root.t.radius
+        color: root.t.background
+        border.width: 1
+        border.color: root.t.border
+    }
+
     StackLayout {
         anchors.fill: parent
         anchors.margins: root.t.compact ? root.t.spacing : root.t.spacing * 1.25
