@@ -54,7 +54,7 @@ kpackagetool6 -t Plasma/Applet -u package/
 To remove it:
 
 ```bash
-kpackagetool6 -t Plasma/Applet -r com.github.peterchege.quicksettings
+kpackagetool6 -t Plasma/Applet -r com.github.peter-njoro.quicksettings
 ```
 
 Then right-click your panel, choose **Enter Edit Mode → Add Widgets**, search
@@ -63,13 +63,13 @@ for **Quick Settings**, and place it on the panel.
 During development you can preview the applet with the Plasma SDK:
 
 ```bash
-plasmoidviewer -a com.github.peterchege.quicksettings
+plasmoidviewer -a com.github.peter-njoro.quicksettings
 ```
 
 If `plasmoidviewer` is unavailable, use the windowed preview:
 
 ```bash
-plasmawindowed com.github.peterchege.quicksettings
+plasmawindowed com.github.peter-njoro.quicksettings
 ```
 
 ## Packaging
@@ -113,8 +113,8 @@ Useful Plasma tools:
 
 ```bash
 kpackagetool6 -t Plasma/Applet -i package/
-plasmoidviewer -a com.github.peterchege.quicksettings
-plasmawindowed com.github.peterchege.quicksettings
+plasmoidviewer -a com.github.peter-njoro.quicksettings
+plasmawindowed com.github.peter-njoro.quicksettings
 ```
 
 ### Architecture
@@ -167,4 +167,4 @@ GPL-3.0-or-later. See [LICENSE](LICENSE).
 ## Contributing
 
 Bug reports and merge requests are welcome at
-<https://github.com/peterchege/quicksettings>.
+<https://github.com/peter-njoro/quicksettings>.
