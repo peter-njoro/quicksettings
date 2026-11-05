@@ -24,7 +24,7 @@ Rectangle {
     implicitWidth: contentItem.implicitWidth + t.cardPadding * 2
     implicitHeight: contentItem.implicitHeight + t.cardPadding * 2
 
-    radius: Math.max(0, t.radius * 0.72)
+    radius: Math.max(0, t.radius * 0.9)
     color: interactive && hovered ? t.cardHover : t.card
     border.width: 1
     border.color: interactive && hovered ? t.alpha(t.accent, 0.42) : t.border

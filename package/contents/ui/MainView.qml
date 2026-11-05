@@ -83,25 +83,79 @@ Item {
                         width: mainScroll.availableWidth
                         spacing: root.t.spacing
 
-                        ConnectivityCard {
+                        RowLayout {
                             Layout.fillWidth: true
-                            visible: root.cfg.showWifi !== false
-                            theme: root.t
-                            kind: "wifi"
-                            onActivated: root.currentPage = 1
+                            visible: connectivityColumn.visible
+                                || (root.cfg.showMedia !== false)
+
+                            ColumnLayout {
+                                id: connectivityColumn
+
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+                                spacing: root.t.spacing
+                                visible: wifiCard.visible || bluetoothCard.visible
+
+                                ConnectivityCard {
+                                    id: wifiCard
+
+                                    Layout.fillWidth: true
+                                    Layout.fillHeight: true
+                                    visible: root.cfg.showWifi !== false
+                                    theme: root.t
+                                    kind: "wifi"
+                                    onActivated: root.currentPage = 1
+                                }
+
+                                ConnectivityCard {
+                                    id: bluetoothCard
+
+                                    Layout.fillWidth: true
+                                    Layout.fillHeight: true
+                                    visible: root.cfg.showBluetooth !== false
+                                    theme: root.t
+                                    kind: "bluetooth"
+                                    onActivated: root.currentPage = 1
+                                }
+                            }
+
+                            MediaCard {
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+                                visible: root.cfg.showMedia !== false
+                                theme: root.t
+                            }
                         }
 
-                        ConnectivityCard {
+                        RowLayout {
                             Layout.fillWidth: true
-                            visible: root.cfg.showBluetooth !== false
-                            theme: root.t
-                            kind: "bluetooth"
-                            onActivated: root.currentPage = 1
+                            spacing: root.t.spacing
+                            visible: root.cfg.showFocus !== false
+                                || root.cfg.showAppearance !== false
+                                || root.cfg.showNightLight !== false
+
+                            FocusCard {
+                                Layout.fillWidth: true
+                                visible: root.cfg.showFocus !== false
+                                theme: root.t
+                            }
+
+                            AppearanceCard {
+                                Layout.fillWidth: true
+                                visible: root.cfg.showAppearance !== false
+                                theme: root.t
+                                dark: root.dark
+                                animationsEnabled: root.t.animations
+                            }
+
+                            NightLightCard {
+                                Layout.fillWidth: true
+                                visible: root.cfg.showNightLight !== false
+                                theme: root.t
+                            }
                         }
 
                         Components.GlassCard {
-                            id: brightnessCard
-
                             Layout.fillWidth: true
                             visible: root.cfg.showBrightness !== false && brightnessControl.available
                             theme: root.t
@@ -114,8 +168,6 @@ Item {
                         }
 
                         Components.GlassCard {
-                            id: volumeCard
-
                             Layout.fillWidth: true
                             visible: root.cfg.showVolume !== false && volumeControl.available
                             theme: root.t
@@ -127,35 +179,6 @@ Item {
                                 Layout.fillWidth: true
                                 theme: root.t
                             }
-                        }
-
-                        RowLayout {
-                            Layout.fillWidth: true
-                            spacing: root.t.spacing
-                            visible: root.cfg.showFocus !== false
-                                || root.cfg.showAppearance !== false
-
-                            FocusCard {
-                                Layout.fillWidth: true
-                                Layout.fillHeight: true
-                                visible: root.cfg.showFocus !== false
-                                theme: root.t
-                            }
-
-                            AppearanceCard {
-                                Layout.fillWidth: true
-                                Layout.fillHeight: true
-                                visible: root.cfg.showAppearance !== false
-                                theme: root.t
-                                dark: root.dark
-                                animationsEnabled: root.t.animations
-                            }
-                        }
-
-                        MediaCard {
-                            Layout.fillWidth: true
-                            visible: root.cfg.showMedia !== false
-                            theme: root.t
                         }
 
                         BatteryCard {
@@ -173,6 +196,42 @@ Item {
                             theme: root.t
                             configuration: root.cfg
                         }
+                    }
+                }
+
+                PlasmaComponents3.Button {
+                    id: editControlsButton
+
+                    Layout.alignment: Qt.AlignHCenter
+                    text: i18n("Edit Controls")
+                    icon.name: "configure"
+                    onClicked: Plasmoid.internalAction("configure").trigger()
+
+                    contentItem: RowLayout {
+                        spacing: Kirigami.Units.smallSpacing
+
+                        Kirigami.Icon {
+                            Layout.preferredWidth: Kirigami.Units.iconSizes.small
+                            Layout.preferredHeight: Layout.preferredWidth
+                            source: "configure"
+                            opacity: 0.55
+                        }
+
+                        PlasmaComponents3.Label {
+                            text: editControlsButton.text
+                            color: root.t.muted
+                            opacity: 0.62
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                    }
+
+                    background: Rectangle {
+                        radius: height / 2
+                        color: editControlsButton.hovered
+                            ? root.t.alpha(root.t.text, 0.14)
+                            : root.t.alpha(root.t.text, 0.08)
+                        border.width: 1
+                        border.color: root.t.border
                     }
                 }
             }

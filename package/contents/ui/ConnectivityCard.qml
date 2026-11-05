@@ -64,6 +64,9 @@ Components.GlassCard {
         return serviceEnabled ? i18n("Bluetooth enabled") : i18n("Bluetooth disabled");
     }
 
+    interactive: adapterAvailable
+    onClicked: toggleService()
+
     PlasmaNM.Handler {
         id: networkHandler
     }
@@ -139,8 +142,11 @@ Components.GlassCard {
                         anchors.fill: parent
                         radius: Kirigami.Units.cornerRadius
                         color: root.serviceEnabled
-                            ? root.t.alpha(root.t.accent, 0.20)
+                            ? root.t.alpha(root.t.accent, 0.28)
                             : root.t.alpha(root.t.text, 0.08)
+                        border.width: 1
+                        border.color: root.serviceEnabled
+                            ? root.t.alpha(root.t.accent, 0.56) : root.t.border
                     }
 
                     Kirigami.Icon {
@@ -192,20 +198,14 @@ Components.GlassCard {
                     }
                 }
             }
-
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: root.activated(root.kind)
-            }
         }
 
-        Components.ToggleButton {
+        Components.IconButton {
             Layout.alignment: Qt.AlignVCenter
             theme: root.t
-            checked: root.serviceEnabled
-            interactive: root.adapterAvailable
-            onToggled: root.toggleService()
+            iconName: "go-next"
+            tooltip: i18n("More %1 settings", root.isWifi ? i18n("Wi-Fi") : i18n("Bluetooth"))
+            onClicked: root.activated(root.kind)
         }
     }
 }
