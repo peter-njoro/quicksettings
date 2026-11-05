@@ -83,6 +83,33 @@ ColumnLayout {
 
         onMoved: root.moved(value)
 
+        background: Rectangle {
+            x: slider.leftPadding
+            y: slider.topPadding + slider.availableHeight / 2 - height / 2
+            width: slider.availableWidth
+            height: 6
+            radius: height / 2
+            color: root.t.alpha(root.t.text, 0.16)
+
+            Rectangle {
+                width: slider.visualPosition * parent.width
+                height: parent.height
+                radius: parent.radius
+                color: root.t.accent
+            }
+        }
+
+        handle: Rectangle {
+            x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
+            y: slider.topPadding + slider.availableHeight / 2 - height / 2
+            width: 16
+            height: width
+            radius: width / 2
+            color: "#ffffff"
+            border.width: 1
+            border.color: root.t.alpha(root.t.text, 0.48)
+        }
+
         Behavior on value {
             enabled: !slider.pressed
             NumberAnimation { duration: root.t.shortAnimationDuration }

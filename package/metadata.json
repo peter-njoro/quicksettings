@@ -8,7 +8,7 @@
             }
         ],
         "Category": "Utilities",
-        "Description": "A modern glass-inspired control panel for frequently used desktop settings.",
+        "Description": "A modern glass control panel for frequently used desktop settings.",
         "Icon": "preferences-system",
         "Id": "com.github.peter-njoro.quicksettings",
         "License": "GPL-3.0-or-later",

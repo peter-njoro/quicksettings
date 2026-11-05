@@ -27,10 +27,22 @@ Rectangle {
     radius: Math.max(0, t.radius * 0.72)
     color: interactive && hovered ? t.cardHover : t.card
     border.width: 1
-    border.color: t.border
+    border.color: interactive && hovered ? t.alpha(t.accent, 0.42) : t.border
 
     Behavior on color {
         ColorAnimation { duration: card.t.animationDuration }
+    }
+
+    Behavior on border.color {
+        ColorAnimation { duration: card.t.shortAnimationDuration }
+    }
+
+    Rectangle {
+        anchors.fill: parent
+        radius: card.radius
+        color: card.t.cardSheen
+        border.width: 1
+        border.color: card.t.alpha(card.t.text, 0.045)
     }
 
     ColumnLayout {

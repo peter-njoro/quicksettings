@@ -32,10 +32,12 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        radius: Kirigami.Units.cornerRadius
+        radius: height / 2
         color: root.checked
-            ? root.t.alpha(root.t.accent, 0.28)
-            : (root.hovered && root.interactive ? root.t.border : "transparent")
+            ? root.t.alpha(root.t.accent, 0.24)
+            : (root.hovered && root.interactive
+                ? root.t.alpha(root.t.text, 0.15)
+                : root.t.alpha(root.t.text, 0.07))
 
         Behavior on color {
             ColorAnimation { duration: root.t.shortAnimationDuration }

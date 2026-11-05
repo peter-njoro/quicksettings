@@ -1,8 +1,8 @@
 # Quick Settings
 
-A modern, glass-inspired control panel for KDE Plasma 6. Quick Settings keeps
-frequently used desktop controls in one place: connectivity, brightness,
-volume, media playback, focus mode, appearance, battery and power management.
+A modern glass control panel for KDE Plasma 6. Quick Settings keeps frequently
+used desktop controls in one place: connectivity, brightness, volume, media
+playback, focus mode, appearance, battery and power management.
 
 ![Quick Settings main panel](screenshots/main-light.png)
 

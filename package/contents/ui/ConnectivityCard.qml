@@ -131,13 +131,29 @@ Components.GlassCard {
                 anchors.fill: parent
                 spacing: Kirigami.Units.smallSpacing
 
-                Kirigami.Icon {
-                    Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium
+                Item {
+                    Layout.preferredWidth: Kirigami.Units.gridUnit * 1.8
                     Layout.preferredHeight: Layout.preferredWidth
-                    source: root.isWifi
-                        ? (root.wirelessEnabled ? "network-wireless" : "network-wireless-disabled")
-                        : (root.serviceEnabled ? "bluetooth-active" : "bluetooth-disabled")
-                    opacity: root.adapterAvailable ? 0.9 : 0.4
+
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: Kirigami.Units.cornerRadius
+                        color: root.serviceEnabled
+                            ? root.t.alpha(root.t.accent, 0.20)
+                            : root.t.alpha(root.t.text, 0.08)
+                    }
+
+                    Kirigami.Icon {
+                        anchors.centerIn: parent
+                        width: Kirigami.Units.iconSizes.smallMedium
+                        height: width
+                        source: root.isWifi
+                            ? (root.wirelessEnabled
+                                ? "network-wireless" : "network-wireless-disabled")
+                            : (root.serviceEnabled ? "bluetooth-active" : "bluetooth-disabled")
+                        color: root.serviceEnabled ? root.t.accent : root.t.muted
+                        opacity: root.adapterAvailable ? 1.0 : 0.45
+                    }
                 }
 
                 ColumnLayout {

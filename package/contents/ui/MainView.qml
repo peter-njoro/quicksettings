@@ -43,7 +43,11 @@ Item {
     Rectangle {
         anchors.fill: parent
         radius: root.t.radius
-        color: root.t.background
+        clip: true
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: root.t.backgroundTop }
+            GradientStop { position: 1.0; color: root.t.background }
+        }
         border.width: 1
         border.color: root.t.border
     }
