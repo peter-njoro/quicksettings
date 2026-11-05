@@ -85,6 +85,8 @@ Item {
                 }
 
                 Repeater {
+                    id: outputsRepeater
+
                     model: sinkModel
 
                     delegate: Components.GlassCard {
@@ -135,6 +137,88 @@ Item {
                             }
                         }
                     }
+                }
+
+                PlasmaComponents3.Label {
+                    Layout.fillWidth: true
+                    visible: outputsRepeater.count === 0
+                    text: i18n("No audio output devices available.")
+                    color: root.t.muted
+                    font.pointSize: Kirigami.Theme.smallFont.pointSize
+                    textFormat: Text.PlainText
+                }
+
+                PlasmaComponents3.Label {
+                    Layout.fillWidth: true
+                    Layout.topMargin: root.t.spacing
+                    text: i18n("Input devices")
+                    color: root.t.muted
+                    font.weight: Font.DemiBold
+                    font.pointSize: Kirigami.Theme.smallFont.pointSize
+                    textFormat: Text.PlainText
+                }
+
+                Repeater {
+                    id: inputsRepeater
+
+                    model: sourceModel
+
+                    delegate: Components.GlassCard {
+                        Layout.fillWidth: true
+                        theme: root.t
+
+                        readonly property var device: model.PulseObject
+
+                        ColumnLayout {
+                            Layout.fillWidth: true
+                            spacing: Kirigami.Units.smallSpacing
+
+                            RowLayout {
+                                Layout.fillWidth: true
+
+                                Kirigami.Icon {
+                                    Layout.preferredWidth: Kirigami.Units.iconSizes.small
+                                    Layout.preferredHeight: Layout.preferredWidth
+                                    source: "audio-input-microphone"
+                                    opacity: device.isDefault ? 1.0 : 0.6
+                                }
+
+                                PlasmaComponents3.Label {
+                                    Layout.fillWidth: true
+                                    text: device.description || device.name
+                                    color: root.t.text
+                                    elide: Text.ElideRight
+                                    textFormat: Text.PlainText
+                                }
+                            }
+
+                            Components.SliderControl {
+                                Layout.fillWidth: true
+                                theme: root.t
+                                iconName: "audio-input-microphone"
+                                label: ""
+                                showLabel: false
+                                muted: device.muted
+                                valueText: Math.round(device.volume
+                                    / Math.max(1, root.normalVolume) * 100) + "%"
+                                from: 0
+                                to: root.normalVolume
+                                value: device.volume
+                                stepSize: Math.max(1, Math.round(root.normalVolume / 100))
+                                onMoved: device.volume = Math.round(value)
+                                onIconClicked: device.muted = !device.muted
+                            }
+                        }
+                    }
+                }
+
+                PlasmaComponents3.Label {
+                    Layout.fillWidth: true
+                    visible: inputsRepeater.count === 0
+                    text: i18n("No microphone devices available.")
+                    color: root.t.muted
+                    font.pointSize: Kirigami.Theme.smallFont.pointSize
+                    textFormat: Text.PlainText
                 }
 
                 PlasmaComponents3.Label {

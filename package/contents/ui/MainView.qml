@@ -36,6 +36,7 @@ Item {
         blur: root.cfg.blur !== false
         radius: root.cfg.cornerRadius !== undefined ? root.cfg.cornerRadius : 22
         animations: root.cfg.animations !== false
+        animationSpeed: (root.cfg.animationSpeed !== undefined ? root.cfg.animationSpeed : 100) / 100
         compact: root.cfg.compactSpacing === true
     }
 

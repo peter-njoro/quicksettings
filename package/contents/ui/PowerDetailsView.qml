@@ -203,7 +203,7 @@ Item {
                     Layout.topMargin: root.t.spacing
                     theme: root.t
                     interactive: true
-                    onClicked: KCMUtils.KCMLauncher.openSystemSettings("kcm_powerdevil")
+                    onClicked: KCMUtils.KCMLauncher.openSystemSettings("kcm_powerdevilprofilesconfig")
 
                     RowLayout {
                         Layout.fillWidth: true

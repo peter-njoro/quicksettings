@@ -56,7 +56,7 @@ Components.GlassCard {
             theme: root.t
             iconName: "preferences-system-power-management"
             tooltip: i18n("Power settings")
-            onClicked: KCMUtils.KCMLauncher.openSystemSettings("kcm_powerdevil")
+            onClicked: KCMUtils.KCMLauncher.openSystemSettings("kcm_powerdevilprofilesconfig")
         }
 
         Components.IconButton {

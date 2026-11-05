@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Microphone volume and mute controls in the audio details view.
+- Animation speed and close-on-outside-click settings.
+- Opaque card fallback when the translucent glass effect is disabled.
+
+### Changed
+
+- Use the native Plasma popup background and keep the glass treatment on cards.
+- Keep sliders in sync with external state changes without fighting user drags.
+- Correct power settings shortcuts to the installed PowerDevil KCM.
+
 ## [1.0.0] - 2026-11-04
 
 ### Added

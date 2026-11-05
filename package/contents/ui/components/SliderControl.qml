@@ -73,8 +73,13 @@ ColumnLayout {
         from: root.from
         to: root.to
         stepSize: root.stepSize
-        value: root.value
         opacity: root.interactive ? 1.0 : 0.45
+
+        Binding on value {
+            value: root.value
+            when: !slider.pressed
+            restoreMode: Binding.RestoreNone
+        }
 
         onMoved: root.moved(value)
 

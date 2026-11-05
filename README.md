@@ -84,10 +84,12 @@ KConfig and persists between sessions.
 Available settings include:
 
 - Automatic, light or dark appearance; accent colour following.
-- Transparency, blur, corner radius, compact spacing and animations.
+- Transparency, glass effect, corner radius, compact spacing, animations and
+  animation speed.
 - Visibility of each module (Wi-Fi, Bluetooth, brightness, volume, focus,
   appearance, media, battery and quick actions).
-- Header date visibility and whether the popup remembers the last view.
+- Header date visibility, close-on-outside-click and whether the popup
+  remembers the last view.
 - Individual quick actions for System Settings, lock screen, display, power,
   network, Bluetooth and audio settings.
 
@@ -126,8 +128,9 @@ official KDE utility for that task (for example
 
 - **The widget does not appear:** confirm the package structure and reinstall
   with `kpackagetool6 -t Plasma/Applet -u package/`.
-- **Blur is unavailable:** the interface remains readable with an opaque
-  fallback; blur depends on the compositor and Plasma theme.
+- **Blur is unavailable:** disable the translucent glass cards in the widget
+  settings for an opaque, readable fallback; blur itself depends on the
+  compositor and Plasma theme.
 - **A card shows unavailable:** the required service or hardware is missing.
   Verify NetworkManager, BlueZ, PipeWire/PulseAudio, UPower and PowerDevil are
   running.

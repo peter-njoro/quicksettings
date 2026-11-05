@@ -16,9 +16,11 @@ KCM.ScrollViewKCM {
     property alias cfg_blur: blurCheck.checked
     property alias cfg_cornerRadius: radiusSlider.value
     property alias cfg_animations: animationsCheck.checked
+    property alias cfg_animationSpeed: animationSpeedSlider.value
     property alias cfg_followAccent: followAccentCheck.checked
     property alias cfg_compactSpacing: compactSpacingCheck.checked
     property alias cfg_rememberView: rememberViewCheck.checked
+    property alias cfg_closeOnOutsideClick: closeOnOutsideClickCheck.checked
     property alias cfg_showHeaderDate: showHeaderDateCheck.checked
 
     header: Kirigami.FormLayout {
@@ -89,6 +91,25 @@ KCM.ScrollViewKCM {
             text: i18n("Enable animations")
         }
 
+        RowLayout {
+            Kirigami.FormData.label: i18n("Animation speed:")
+
+            QQC2.Slider {
+                id: animationSpeedSlider
+
+                Layout.fillWidth: true
+                from: 0
+                to: 200
+                stepSize: 10
+            }
+
+            QQC2.Label {
+                Layout.minimumWidth: Kirigami.Units.gridUnit * 2
+                horizontalAlignment: Text.AlignRight
+                text: Math.round(animationSpeedSlider.value) + "%"
+            }
+        }
+
         QQC2.CheckBox {
             id: followAccentCheck
 
@@ -108,6 +129,12 @@ KCM.ScrollViewKCM {
 
             Kirigami.FormData.label: i18n("Behavior:")
             text: i18n("Remember the last opened page")
+        }
+
+        QQC2.CheckBox {
+            id: closeOnOutsideClickCheck
+
+            text: i18n("Close when clicking outside the popup")
         }
 
         QQC2.CheckBox {

@@ -18,6 +18,7 @@ PlasmoidItem {
     Plasmoid.icon: "preferences-system"
     Plasmoid.backgroundHints: PlasmaCore.Types.DefaultBackground
         | PlasmaCore.Types.ConfigurableBackground
+    hideOnWindowDeactivate: plasmoid.configuration.closeOnOutsideClick
 
     toolTipMainText: i18n("Quick Settings")
     toolTipSubText: i18n("Open the quick control panel")

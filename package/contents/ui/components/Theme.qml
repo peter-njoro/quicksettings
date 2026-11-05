@@ -11,6 +11,7 @@ QtObject {
     property bool dark: true
     property bool followAccent: true
     property bool animations: true
+    property real animationSpeed: 1.0
     property bool blur: true
     property bool compact: false
     property real transparency: 0.85
@@ -40,8 +41,10 @@ QtObject {
     readonly property int cardPadding: compact
         ? Math.round(Kirigami.Units.smallSpacing * 1.5)
         : Math.round(Kirigami.Units.gridUnit * 0.65)
-    readonly property int animationDuration: animations ? Kirigami.Units.longDuration : 0
-    readonly property int shortAnimationDuration: animations ? Kirigami.Units.shortDuration : 0
+    readonly property int animationDuration: animations
+        ? Math.round(Kirigami.Units.longDuration * animationSpeed) : 0
+    readonly property int shortAnimationDuration: animations
+        ? Math.round(Kirigami.Units.shortDuration * animationSpeed) : 0
 
     function alpha(color, value) {
         return Qt.rgba(color.r, color.g, color.b, value);

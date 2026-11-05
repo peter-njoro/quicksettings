@@ -33,7 +33,7 @@ Components.GlassCard {
     readonly property bool serviceEnabled: isWifi
         ? wirelessEnabled
         : (!bluetoothBlocked && bluetoothPowered)
-    readonly property bool adapterAvailable: isWifi || bluetoothAdapter !== null
+    readonly property bool adapterAvailable: isWifi || BluezQt.Manager !== null
 
     readonly property var activeWifi: firstActiveWifi()
     readonly property bool wifiConnected: activeWifi !== null
