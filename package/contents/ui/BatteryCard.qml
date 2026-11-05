@@ -21,6 +21,7 @@ Components.GlassCard {
 
     interactive: root.present
     signal activated()
+    onClicked: root.activated()
 
     BatteryControlModel {
         id: battery
