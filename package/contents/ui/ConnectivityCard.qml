@@ -23,7 +23,17 @@ Components.GlassCard {
     readonly property bool isBluetooth: kind === "bluetooth"
 
     readonly property bool wirelessEnabled: enabledConnections.wirelessEnabled
-    readonly property var bluetoothAdapter: BluezQt.Manager ? BluezQt.Manager.usableAdapter : null
+    readonly property var bluetoothAdapter: {
+        if (!BluezQt.Manager) {
+            return null;
+        }
+        const usable = BluezQt.Manager.usableAdapter;
+        if (usable) {
+            return usable;
+        }
+        const adapters = BluezQt.Manager.adapters;
+        return adapters && adapters.length > 0 ? adapters[0] : null;
+    }
     readonly property bool bluetoothPowered: bluetoothAdapter !== null
         && bluetoothAdapter !== undefined && bluetoothAdapter.powered
     readonly property bool bluetoothBlocked: BluezQt.Manager ? BluezQt.Manager.bluetoothBlocked : true
@@ -33,7 +43,7 @@ Components.GlassCard {
     readonly property bool serviceEnabled: isWifi
         ? wirelessEnabled
         : (!bluetoothBlocked && bluetoothPowered)
-    readonly property bool adapterAvailable: isWifi || BluezQt.Manager !== null
+    readonly property bool adapterAvailable: isWifi || bluetoothAdapter !== null
 
     readonly property var activeWifi: firstActiveWifi()
     readonly property bool wifiConnected: activeWifi !== null
@@ -111,13 +121,12 @@ Components.GlassCard {
             return;
         }
 
+        const enable = !serviceEnabled;
         if (bluetoothBlocked) {
             BluezQt.Manager.bluetoothBlocked = false;
-            return;
         }
-
         if (bluetoothAdapter) {
-            bluetoothAdapter.powered = !bluetoothAdapter.powered;
+            bluetoothAdapter.powered = enable;
         }
     }
 
@@ -157,9 +166,8 @@ Components.GlassCard {
                             ? Qt.resolvedUrl("../icons/wifi.svg")
                             : Qt.resolvedUrl("../icons/bluetooth.svg")
                         isMask: true
-                        color: root.serviceEnabled ? root.t.accent : root.t.muted
-                        opacity: (root.serviceEnabled ? 1.0 : 0.6)
-                            * (root.adapterAvailable ? 1.0 : 0.45)
+                        color: root.serviceEnabled ? root.t.accent : root.t.text
+                        opacity: root.adapterAvailable ? 1.0 : 0.4
                     }
                 }
 

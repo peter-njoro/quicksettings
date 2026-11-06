@@ -27,6 +27,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Ship the default panel icon as a bundled SVG instead of a theme icon.
 - Use bundled Wi-Fi and Bluetooth icons for connectivity cards and lists.
 
+### Fixed
+
+- Enable Bluetooth from the connectivity card when the adapter is powered off.
+- Keep the Bluetooth card icon clearly visible while Bluetooth is off.
+
 ## [1.0.0] - 2026-11-04
 
 ### Added
