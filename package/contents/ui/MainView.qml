@@ -62,11 +62,13 @@ Item {
         sourceComponent: {
             switch (root.currentPage) {
             case 1:
-                return connectivityPage;
+                return wifiPage;
             case 2:
                 return audioPage;
             case 3:
                 return powerPage;
+            case 4:
+                return bluetoothPage;
             default:
                 return mainPage;
             }
@@ -138,7 +140,7 @@ Item {
                                     visible: root.cfg.showBluetooth !== false
                                     theme: root.t
                                     kind: "bluetooth"
-                                    onActivated: root.currentPage = 1
+                                    onActivated: root.currentPage = 4
                                 }
                             }
 
@@ -266,9 +268,19 @@ Item {
     }
 
     Component {
-        id: connectivityPage
+        id: wifiPage
 
-        ConnectivityDetailsView {
+        WifiDetailsView {
+            theme: root.t
+            configuration: root.cfg
+            onBackRequested: root.currentPage = 0
+        }
+    }
+
+    Component {
+        id: bluetoothPage
+
+        BluetoothDetailsView {
             theme: root.t
             configuration: root.cfg
             onBackRequested: root.currentPage = 0

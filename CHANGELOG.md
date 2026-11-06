@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Keep the native Plasma popup frame and draw a translucent glass panel over it.
 - Keep the glass panel coherent when forcing light or dark appearance.
 - Keep sliders in sync with external state changes without fighting user drags.
+- Prevent mouse wheel scrolling over sliders from changing their values.
+- Split the combined connectivity view into separate Wi-Fi and Bluetooth views.
 - Correct power settings shortcuts to the installed PowerDevil KCM.
 
 ## [1.0.0] - 2026-11-04

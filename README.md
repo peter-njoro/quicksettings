@@ -17,7 +17,7 @@ for the full set and capture notes.
 - Light and dark appearance, with the system accent colour by default.
 - Live system state for Wi-Fi, Bluetooth, volume, screen brightness, media,
   notifications and battery.
-- Expanded connectivity, audio and power views inside the same popup.
+- Separate Wi-Fi, Bluetooth, audio and power detail views inside the same popup.
 - Per-module visibility, spacing, transparency, corner radius, animation and
   quick-action configuration.
 - QML-only implementation: no compiled plugin and no root privileges required.
@@ -154,9 +154,9 @@ official KDE utility for that task (for example
 | --- | --- |
 | ![Main panel, light](screenshots/main-light.png) | ![Main panel, dark](screenshots/main-dark.png) |
 
-| Connectivity | Audio | Power |
-| --- | --- | --- |
-| ![Connectivity details](screenshots/connectivity.png) | ![Audio details](screenshots/audio.png) | ![Power details](screenshots/power.png) |
+| Wi-Fi | Bluetooth | Audio | Power |
+| --- | --- | --- | --- |
+| ![Wi-Fi details](screenshots/wifi.png) | ![Bluetooth details](screenshots/bluetooth.png) | ![Audio details](screenshots/audio.png) | ![Power details](screenshots/power.png) |
 
 All screenshots are rendered from the actual QML sources; no mockups are used.
 
