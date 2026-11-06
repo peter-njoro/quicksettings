@@ -9,7 +9,7 @@
         ],
         "Category": "Utilities",
         "Description": "A modern glass control panel for frequently used desktop settings.",
-        "Icon": "preferences-system",
+        "Icon": "/icons/quick-settings.svg",
         "Id": "com.github.peter-njoro.quicksettings",
         "License": "GPL-3.0-or-later",
         "Name": "Quick Settings",

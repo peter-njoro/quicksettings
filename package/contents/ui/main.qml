@@ -14,10 +14,11 @@ PlasmoidItem {
     readonly property bool dark: plasmoid.configuration.appearance === "dark"
         || (plasmoid.configuration.appearance === "automatic" && systemDark)
     readonly property bool useCustomIcon: plasmoid.configuration.useCustomIcon === true
-    readonly property string customIcon: plasmoid.configuration.icon || "preferences-system"
+    readonly property string customIcon: plasmoid.configuration.icon || ""
+    readonly property string defaultIcon: Qt.resolvedUrl("../icons/quick-settings.svg")
 
     Plasmoid.title: i18n("Quick Settings")
-    Plasmoid.icon: useCustomIcon ? customIcon : "preferences-system"
+    Plasmoid.icon: useCustomIcon && customIcon.length > 0 ? customIcon : defaultIcon
     Plasmoid.backgroundHints: PlasmaCore.Types.DefaultBackground
         | PlasmaCore.Types.ConfigurableBackground
     hideOnWindowDeactivate: plasmoid.configuration.closeOnOutsideClick

@@ -16,7 +16,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
             <default>false</default>
         </entry>
         <entry name="icon" type="String">
-            <default>preferences-system</default>
+            <default></default>
         </entry>
         <entry name="transparency" type="Int">
             <default>85</default>

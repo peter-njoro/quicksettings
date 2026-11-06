@@ -26,10 +26,19 @@ KCM.SimpleKCM {
     property alias cfg_closeOnOutsideClick: closeOnOutsideClickCheck.checked
     property alias cfg_showHeaderDate: showHeaderDateCheck.checked
 
+    readonly property bool customIconActive: useCustomIconCheck.checked
+        && cfg_icon.length > 0
+    readonly property url defaultIcon: Qt.resolvedUrl("../icons/quick-settings.svg")
+
     KIconThemes.IconDialog {
         id: iconDialog
 
-        onIconNameChanged: iconName => page.cfg_icon = iconName || "preferences-system"
+        onIconNameChanged: iconName => {
+            if (iconName.length > 0) {
+                page.cfg_icon = iconName;
+                useCustomIconCheck.checked = true;
+            }
+        }
     }
 
     Kirigami.FormLayout {
@@ -51,6 +60,14 @@ KCM.SimpleKCM {
         RowLayout {
             Kirigami.FormData.label: i18n("Panel icon:")
 
+            Kirigami.Icon {
+                Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium
+                Layout.preferredHeight: Kirigami.Units.iconSizes.smallMedium
+                source: page.customIconActive ? page.cfg_icon : page.defaultIcon
+                isMask: !page.customIconActive
+                color: Kirigami.Theme.textColor
+            }
+
             QQC2.CheckBox {
                 id: useCustomIconCheck
 
@@ -60,16 +77,17 @@ KCM.SimpleKCM {
             QQC2.Button {
                 id: iconButton
 
-                enabled: useCustomIconCheck.checked
                 text: i18n("Choose…")
-                icon.name: page.cfg_icon || "preferences-system"
                 onClicked: iconDialog.open()
             }
 
             QQC2.ToolButton {
                 text: i18n("Reset")
-                enabled: useCustomIconCheck.checked
-                onClicked: page.cfg_icon = "preferences-system"
+                enabled: page.customIconActive
+                onClicked: {
+                    page.cfg_icon = "";
+                    useCustomIconCheck.checked = false;
+                }
             }
         }
 

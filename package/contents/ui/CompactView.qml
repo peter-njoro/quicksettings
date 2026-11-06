@@ -15,6 +15,7 @@ Item {
     property string iconName: ""
 
     readonly property bool showCustomIcon: useCustomIcon && iconName.length > 0
+    readonly property url defaultIcon: Qt.resolvedUrl("../icons/quick-settings.svg")
 
     implicitWidth: Kirigami.Units.iconSizes.smallMedium
         + Kirigami.Units.smallSpacing * 2
@@ -50,49 +51,9 @@ Item {
             anchors.centerIn: parent
             width: Kirigami.Units.iconSizes.small
             height: width
-            source: root.iconName
-            visible: root.showCustomIcon
-        }
-
-        Item {
-            id: defaultGlyph
-
-            anchors.fill: parent
-            visible: !root.showCustomIcon
-
-            Repeater {
-                model: [
-                    { knob: 0.22, offset: 2 },
-                    { knob: 0.72, offset: 9 },
-                    { knob: 0.42, offset: 5 }
-                ]
-
-                delegate: Item {
-                    required property var modelData
-                    required property int index
-
-                    x: 0
-                    y: index * (glyph.height / 3) + 1
-                    width: glyph.width
-                    height: Math.max(2, glyph.height / 9)
-
-                    Rectangle {
-                        anchors.fill: parent
-                        radius: height / 2
-                        color: Kirigami.Theme.textColor
-                        opacity: 0.85
-                    }
-
-                    Rectangle {
-                        width: Math.max(4, glyph.height / 4.5)
-                        height: width
-                        radius: width / 2
-                        color: Kirigami.Theme.highlightColor
-                        anchors.verticalCenter: parent.verticalCenter
-                        x: Math.round((parent.width - width) * modelData.knob)
-                    }
-                }
-            }
+            source: root.showCustomIcon ? root.iconName : root.defaultIcon
+            isMask: !root.showCustomIcon
+            color: Kirigami.Theme.textColor
         }
     }
 
