@@ -7,11 +7,14 @@ import QtQuick.Layouts
 
 import org.kde.kcmutils as KCM
 import org.kde.kirigami as Kirigami
+import org.kde.iconthemes as KIconThemes
 
 KCM.SimpleKCM {
     id: page
 
     property alias cfg_appearance: appearanceCombo.currentValue
+    property alias cfg_useCustomIcon: useCustomIconCheck.checked
+    property string cfg_icon
     property alias cfg_transparency: transparencySlider.value
     property alias cfg_blur: blurCheck.checked
     property alias cfg_cornerRadius: radiusSlider.value
@@ -22,6 +25,12 @@ KCM.SimpleKCM {
     property alias cfg_rememberView: rememberViewCheck.checked
     property alias cfg_closeOnOutsideClick: closeOnOutsideClickCheck.checked
     property alias cfg_showHeaderDate: showHeaderDateCheck.checked
+
+    KIconThemes.IconDialog {
+        id: iconDialog
+
+        onIconNameChanged: iconName => page.cfg_icon = iconName || "preferences-system"
+    }
 
     Kirigami.FormLayout {
         QQC2.ComboBox {
@@ -37,6 +46,31 @@ KCM.SimpleKCM {
                 { text: i18n("Light"), value: "light" }
             ]
 
+        }
+
+        RowLayout {
+            Kirigami.FormData.label: i18n("Panel icon:")
+
+            QQC2.CheckBox {
+                id: useCustomIconCheck
+
+                text: i18n("Use a custom icon")
+            }
+
+            QQC2.Button {
+                id: iconButton
+
+                enabled: useCustomIconCheck.checked
+                text: i18n("Choose…")
+                icon.name: page.cfg_icon || "preferences-system"
+                onClicked: iconDialog.open()
+            }
+
+            QQC2.ToolButton {
+                text: i18n("Reset")
+                enabled: useCustomIconCheck.checked
+                onClicked: page.cfg_icon = "preferences-system"
+            }
         }
 
         RowLayout {

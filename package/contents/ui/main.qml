@@ -13,9 +13,11 @@ PlasmoidItem {
     readonly property bool systemDark: Kirigami.Theme.backgroundColor.hslLightness < 0.5
     readonly property bool dark: plasmoid.configuration.appearance === "dark"
         || (plasmoid.configuration.appearance === "automatic" && systemDark)
+    readonly property bool useCustomIcon: plasmoid.configuration.useCustomIcon === true
+    readonly property string customIcon: plasmoid.configuration.icon || "preferences-system"
 
     Plasmoid.title: i18n("Quick Settings")
-    Plasmoid.icon: "preferences-system"
+    Plasmoid.icon: useCustomIcon ? customIcon : "preferences-system"
     Plasmoid.backgroundHints: PlasmaCore.Types.DefaultBackground
         | PlasmaCore.Types.ConfigurableBackground
     hideOnWindowDeactivate: plasmoid.configuration.closeOnOutsideClick
@@ -24,6 +26,8 @@ PlasmoidItem {
     toolTipSubText: i18n("Open the quick control panel")
 
     compactRepresentation: CompactView {
+        useCustomIcon: root.useCustomIcon
+        iconName: root.customIcon
         onActivated: root.expanded = !root.expanded
     }
 

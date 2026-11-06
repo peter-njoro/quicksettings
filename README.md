@@ -92,6 +92,7 @@ KConfig and persists between sessions.
 Available settings include:
 
 - Automatic, light or dark appearance; accent colour following.
+- Optional custom panel icon with an icon picker and reset to default.
 - Transparency, glass effect, corner radius, compact spacing, animations and
   animation speed.
 - Visibility of each module (Wi-Fi, Bluetooth, brightness, volume, focus,

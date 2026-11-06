@@ -11,6 +11,11 @@ Item {
 
     signal activated()
 
+    property bool useCustomIcon: false
+    property string iconName: ""
+
+    readonly property bool showCustomIcon: useCustomIcon && iconName.length > 0
+
     implicitWidth: Kirigami.Units.iconSizes.smallMedium
         + Kirigami.Units.smallSpacing * 2
     implicitHeight: implicitWidth
@@ -41,36 +46,51 @@ Item {
             NumberAnimation { duration: Kirigami.Units.shortDuration }
         }
 
-        Repeater {
-            model: [
-                { knob: 0.22, offset: 2 },
-                { knob: 0.72, offset: 9 },
-                { knob: 0.42, offset: 5 }
-            ]
+        Kirigami.Icon {
+            anchors.centerIn: parent
+            width: Kirigami.Units.iconSizes.small
+            height: width
+            source: root.iconName
+            visible: root.showCustomIcon
+        }
 
-            delegate: Item {
-                required property var modelData
-                required property int index
+        Item {
+            id: defaultGlyph
 
-                x: 0
-                y: index * (glyph.height / 3) + 1
-                width: glyph.width
-                height: Math.max(2, glyph.height / 9)
+            anchors.fill: parent
+            visible: !root.showCustomIcon
 
-                Rectangle {
-                    anchors.fill: parent
-                    radius: height / 2
-                    color: Kirigami.Theme.textColor
-                    opacity: 0.85
-                }
+            Repeater {
+                model: [
+                    { knob: 0.22, offset: 2 },
+                    { knob: 0.72, offset: 9 },
+                    { knob: 0.42, offset: 5 }
+                ]
 
-                Rectangle {
-                    width: Math.max(4, glyph.height / 4.5)
-                    height: width
-                    radius: width / 2
-                    color: Kirigami.Theme.highlightColor
-                    anchors.verticalCenter: parent.verticalCenter
-                    x: Math.round((parent.width - width) * modelData.knob)
+                delegate: Item {
+                    required property var modelData
+                    required property int index
+
+                    x: 0
+                    y: index * (glyph.height / 3) + 1
+                    width: glyph.width
+                    height: Math.max(2, glyph.height / 9)
+
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: height / 2
+                        color: Kirigami.Theme.textColor
+                        opacity: 0.85
+                    }
+
+                    Rectangle {
+                        width: Math.max(4, glyph.height / 4.5)
+                        height: width
+                        radius: width / 2
+                        color: Kirigami.Theme.highlightColor
+                        anchors.verticalCenter: parent.verticalCenter
+                        x: Math.round((parent.width - width) * modelData.knob)
+                    }
                 }
             }
         }

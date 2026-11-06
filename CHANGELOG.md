@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Open the power details view by clicking the battery card.
 - Animation speed and close-on-outside-click settings.
 - Opaque card fallback when the translucent glass effect is disabled.
+- Custom panel icon option with an icon picker in the Appearance configuration tab.
 
 ### Changed
 
