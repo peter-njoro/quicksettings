@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+  <title>Wi-Fi</title>
+  <g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8.5 23.5C22.1 11.8 41.9 11.8 55.5 23.5"/>
+    <path d="M16.5 32C25.3 24.5 38.7 24.5 47.5 32"/>
+    <path d="M24.5 40.5C28.8 36.8 35.2 36.8 39.5 40.5"/>
+  </g>
+  <circle cx="32" cy="49.5" r="3.2" fill="currentColor"/>
+</svg>

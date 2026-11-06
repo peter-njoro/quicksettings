@@ -113,7 +113,9 @@ Item {
                             Kirigami.Icon {
                                 Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium
                                 Layout.preferredHeight: Layout.preferredWidth
-                                source: device.icon || "bluetooth"
+                                source: device.icon || Qt.resolvedUrl("../icons/bluetooth.svg")
+                                isMask: !device.icon
+                                color: root.t.text
                                 opacity: device.connected ? 0.95 : 0.6
                             }
 

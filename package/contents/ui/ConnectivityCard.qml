@@ -154,11 +154,12 @@ Components.GlassCard {
                         width: Kirigami.Units.iconSizes.smallMedium
                         height: width
                         source: root.isWifi
-                            ? (root.wirelessEnabled
-                                ? "network-wireless" : "network-wireless-disabled")
-                            : (root.serviceEnabled ? "bluetooth-active" : "bluetooth-disabled")
+                            ? Qt.resolvedUrl("../icons/wifi.svg")
+                            : Qt.resolvedUrl("../icons/bluetooth.svg")
+                        isMask: true
                         color: root.serviceEnabled ? root.t.accent : root.t.muted
-                        opacity: root.adapterAvailable ? 1.0 : 0.45
+                        opacity: (root.serviceEnabled ? 1.0 : 0.6)
+                            * (root.adapterAvailable ? 1.0 : 0.45)
                     }
                 }
 

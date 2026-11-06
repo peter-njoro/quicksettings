@@ -120,8 +120,10 @@ Item {
                             Kirigami.Icon {
                                 Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium
                                 Layout.preferredHeight: Layout.preferredWidth
-                                source: model.ConnectionState === PlasmaNM.Enums.Activated
-                                    ? "network-wireless-connected" : "network-wireless"
+                                source: Qt.resolvedUrl("../icons/wifi.svg")
+                                isMask: true
+                                color: model.ConnectionState === PlasmaNM.Enums.Activated
+                                    ? root.t.accent : root.t.muted
                             }
 
                             ColumnLayout {
