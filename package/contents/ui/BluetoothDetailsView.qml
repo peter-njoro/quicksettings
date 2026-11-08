@@ -26,13 +26,13 @@ Item {
     Components.Theme { id: fallbackTheme }
 
     function toggleBluetoothDevice(device) {
-        if (!btAdapter) {
+        if (!device || !btAdapter) {
             return;
         }
         if (device.connected) {
-            btAdapter.disconnectFromDevice(device);
+            device.disconnectFromDevice();
         } else {
-            btAdapter.connectToDevice(device);
+            device.connectToDevice();
         }
     }
 
