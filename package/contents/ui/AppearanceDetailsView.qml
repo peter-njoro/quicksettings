@@ -14,7 +14,6 @@ Item {
 
     property var theme: null
     property var koiController: null
-    property bool dark: true
     property bool onboarded: false
 
     signal backRequested()
@@ -59,7 +58,7 @@ Item {
 
             PlasmaComponents3.Label {
                 Layout.fillWidth: true
-                text: root.showOnboarding ? i18n("Set up Appearance") : i18n("Appearance")
+                text: i18n("Set up Appearance")
                 color: root.t.text
                 font.weight: Font.DemiBold
                 font.pointSize: Kirigami.Theme.defaultFont.pointSize + 2
@@ -186,144 +185,15 @@ Item {
                         PlasmaComponents3.Label {
                             Layout.fillWidth: true
                             text: [
-                                i18n("1. Start Koi"),
-                                i18n("2. Open Koi preferences"),
-                                i18n("3. Select the Light Plasma style, color scheme, icons and other options."),
-                                i18n("4. Select the Dark Plasma style, color scheme, icons and other options."),
-                                i18n("5. Save the preferences."),
-                                i18n("6. Return to Quick Settings and continue when ready.")
+                                i18n("1. Open Koi preferences"),
+                                i18n("2. Select the Light Plasma style, color scheme, icons and other options."),
+                                i18n("3. Select the Dark Plasma style, color scheme, icons and other options."),
+                                i18n("4. Save the preferences."),
+                                i18n("5. Return to Quick Settings and continue when ready.")
                             ].join("\n")
                             color: root.t.muted
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             textFormat: Text.PlainText
-                        }
-                    }
-                }
-
-                Components.GlassCard {
-                    Layout.fillWidth: true
-                    visible: !root.showOnboarding
-                    theme: root.t
-
-                    ColumnLayout {
-                        width: parent.width
-                        spacing: root.t.spacing
-
-                        PlasmaComponents3.Label {
-                            Layout.fillWidth: true
-                            text: i18n("Select appearance")
-                            color: root.t.text
-                            font.weight: Font.DemiBold
-                            textFormat: Text.PlainText
-                        }
-
-                        PlasmaComponents3.Label {
-                            Layout.fillWidth: true
-                            visible: root.busy
-                            text: i18n("Checking Koi…")
-                            color: root.t.muted
-                            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                            textFormat: Text.PlainText
-                        }
-
-                        PlasmaComponents3.Label {
-                            Layout.fillWidth: true
-                            visible: root.koi.lastError.length > 0 && !root.busy
-                            text: root.koi.lastError
-                            color: root.t.danger
-                            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                            textFormat: Text.PlainText
-                        }
-                    }
-                }
-
-                Components.GlassCard {
-                    Layout.fillWidth: true
-                    visible: !root.showOnboarding
-                    theme: root.t
-
-                    RowLayout {
-                        width: parent.width
-                        spacing: root.t.spacing
-
-                        Components.CircleButton {
-                            Layout.fillWidth: true
-                            theme: root.t
-                            iconName: "weather-clear"
-                            label: i18n("Light")
-                            statusText: root.dark ? i18n("Inactive") : i18n("Active")
-                            active: !root.dark
-                            interactive: root.connectionReady && root.dark
-                            onActivated: koi.applyLightMode()
-                        }
-
-                        Components.CircleButton {
-                            Layout.fillWidth: true
-                            theme: root.t
-                            iconName: "weather-clear-night"
-                            label: i18n("Dark")
-                            statusText: root.dark ? i18n("Active") : i18n("Inactive")
-                            active: root.dark
-                            interactive: root.connectionReady && !root.dark
-                            onActivated: koi.applyDarkMode()
-                        }
-                    }
-                }
-
-                Components.GlassCard {
-                    Layout.fillWidth: true
-                    visible: !root.showOnboarding
-                    theme: root.t
-
-                    ColumnLayout {
-                        width: parent.width
-                        spacing: root.t.spacing
-
-                        PlasmaComponents3.Label {
-                            Layout.fillWidth: true
-                            text: i18n("Appearance integration")
-                            color: root.t.text
-                            font.weight: Font.DemiBold
-                            textFormat: Text.PlainText
-                        }
-
-                        RowLayout {
-                            Layout.fillWidth: true
-                            spacing: root.t.spacing
-
-                            PlasmaComponents3.Label {
-                                Layout.fillWidth: true
-                                text: i18n("Koi")
-                                color: root.t.muted
-                                font.pointSize: Kirigami.Theme.smallFont.pointSize
-                                textFormat: Text.PlainText
-                            }
-
-                            PlasmaComponents3.Label {
-                                text: root.connectionReady ? i18n("Connected") : i18n("Not connected")
-                                color: root.connectionReady ? root.t.accent : root.t.muted
-                                font.pointSize: Kirigami.Theme.smallFont.pointSize
-                                textFormat: Text.PlainText
-                            }
-                        }
-
-                        Components.CircleButton {
-                            Layout.fillWidth: true
-                            theme: root.t
-                            iconName: "view-refresh"
-                            label: i18n("Check Koi connection")
-                            statusText: i18n("Connection")
-                            active: root.busy
-                            onActivated: koi.checkKoi()
-                        }
-
-                        Components.CircleButton {
-                            Layout.fillWidth: true
-                            theme: root.t
-                            iconName: "help-browser"
-                            label: i18n("Why is Koi required?")
-                            statusText: i18n("Help")
-                            onActivated: koi.openProjectPage()
                         }
                     }
                 }

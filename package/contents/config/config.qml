@@ -13,6 +13,12 @@ ConfigModel {
     }
 
     ConfigCategory {
+        name: i18n("Koi")
+        icon: "preferences-desktop-theme"
+        source: "../config/configKoi.qml"
+    }
+
+    ConfigCategory {
         name: i18n("Sections")
         icon: "view-list-details"
         source: "../config/configSections.qml"

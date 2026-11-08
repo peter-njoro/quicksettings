@@ -18,8 +18,8 @@ Components.CircleButton {
     iconName: Qt.resolvedUrl("../icons/appearance.svg")
     iconIsMask: true
     label: i18n("Appearance")
-    statusText: !koiConnected
-        ? i18n("Set up Koi")
+    statusText: !ready
+        ? i18n("Set up")
         : (dark ? i18n("Dark") : i18n("Light"))
     active: root.ready ? root.dark : false
 }

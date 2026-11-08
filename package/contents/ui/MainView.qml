@@ -189,7 +189,17 @@ Item {
                                 koiConnected: root.koiConnected
                                 koiOnboarded: root.koiOnboarded
                                 animationsEnabled: root.t.animations
-                                onActivated: root.currentPage = 5
+                                onActivated: {
+                                    if (root.koiConnected && root.koiOnboarded) {
+                                        if (root.systemDark) {
+                                            root.koi.applyLightMode();
+                                        } else {
+                                            root.koi.applyDarkMode();
+                                        }
+                                    } else {
+                                        root.currentPage = 5;
+                                    }
+                                }
                             }
 
                             NightLightCard {
@@ -328,10 +338,12 @@ Item {
         AppearanceDetailsView {
             theme: root.t
             koiController: root.koi
-            dark: root.systemDark
             onboarded: root.koiOnboarded
             onBackRequested: root.currentPage = 0
-            onKoiOnboarded: root.cfg.koiOnboarded = true
+            onKoiOnboarded: {
+                root.cfg.koiOnboarded = true;
+                root.currentPage = 0;
+            }
         }
     }
 }
