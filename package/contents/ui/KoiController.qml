@@ -12,8 +12,10 @@ Item {
     readonly property string dbusInterface: "local.KoiDbusInterface"
     readonly property string projectUrl: "https://github.com/baduhai/Koi"
     readonly property string installCheckCommand: "sh -c 'command -v koi'"
-    readonly property string checkCommand: "qdbus6 " + dbusService + " " + dbusPath
-        + " org.freedesktop.DBus.Introspectable.Introspect"
+    // Querying the bus name list instead of Koi directly: making calls to a
+    // missing service would let D-Bus auto-activate Koi.
+    readonly property string checkCommand: "qdbus6 org.freedesktop.DBus /org/freedesktop/DBus"
+        + " org.freedesktop.DBus.ListNames"
     readonly property bool ready: connected
     property bool checking: false
     property bool connected: false
@@ -42,17 +44,10 @@ Item {
                 root.installed = exitCode === 0;
                 root.installedChecked(root.installed);
             } else if (sourceName === root.checkCommand) {
-                const stdout = String(data.stdout || "");
-                root.installed = exitCode === 0;
-                root.connected = root.installed
-                    && stdout.indexOf(root.dbusInterface) >= 0
-                    && stdout.indexOf("goLightMode") >= 0;
-                if (root.connected) {
-                    root.lastError = "";
-                } else {
-                    root.lastError = String(data.stderr || "").trim();
-                }
+                root.connected = exitCode === 0
+                    && String(data.stdout || "").indexOf(root.dbusService + "\n") >= 0;
                 root.checking = false;
+                root.lastError = "";
                 root.connectionChecked(root.connected);
             } else if (sourceName.indexOf(root.dbusInterface + ".goLightMode") >= 0) {
                 if (exitCode !== 0) {
