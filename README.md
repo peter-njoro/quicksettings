@@ -15,6 +15,7 @@ for the full set and capture notes.
 - Floating, rounded glass panel with translucent cards and blur where KWin
   supports it.
 - Light and dark appearance, with the system accent colour by default.
+- Appearance and Night Light quick toggles that stay in sync with the system.
 - Live system state for Wi-Fi, Bluetooth, volume, screen brightness, media,
   notifications and battery.
 - Separate Wi-Fi, Bluetooth, audio and power detail views inside the same popup.
@@ -132,7 +133,8 @@ System integration is intentionally isolated per component so it can be tested
 independently. The widget prefers supported Plasma QML APIs and KDE settings
 modules over shell commands. Where a stable API does not exist, it uses the
 official KDE utility for that task (for example
-`plasma-apply-colorscheme` for appearance switching).
+`plasma-apply-colorscheme` for appearance switching and `kwriteconfig6` for
+turning Night Light on or off).
 
 ## Troubleshooting
 

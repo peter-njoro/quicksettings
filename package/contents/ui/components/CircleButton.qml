@@ -14,6 +14,7 @@ Item {
 
     property var theme: null
     property string iconName: ""
+    property bool iconIsMask: false
     property string label: ""
     property string statusText: ""
     property bool active: false
@@ -72,6 +73,7 @@ Item {
             width: Kirigami.Units.iconSizes.medium
             height: width
             source: root.iconName
+            isMask: root.iconIsMask
             color: root.active ? root.t.accent : root.t.text
         }
     }

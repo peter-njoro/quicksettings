@@ -27,7 +27,8 @@ Components.CircleButton {
         }
     }
 
-    iconName: root.dark ? "weather-clear-night" : "weather-clear"
+    iconName: Qt.resolvedUrl("../icons/appearance.svg")
+    iconIsMask: true
     label: i18n("Appearance")
     statusText: root.dark ? i18n("Dark") : i18n("Light")
     active: root.dark

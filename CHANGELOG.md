@@ -26,6 +26,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Correct power settings shortcuts to the installed PowerDevil KCM.
 - Ship the default panel icon as a bundled SVG instead of a theme icon.
 - Use bundled Wi-Fi and Bluetooth icons for connectivity cards and lists.
+- Use bundled appearance and Night Light icons for their quick controls.
+- Toggle Night Light from its card instead of opening Night Light settings.
+- Base the appearance card state on the system color scheme so enabled means dark.
 
 ### Fixed
 

@@ -13,6 +13,7 @@ Item {
     id: root
 
     property bool dark: true
+    property bool systemDark: dark
     property int currentPage: 0
     property var configuration: null
     property var theme: null
@@ -173,7 +174,7 @@ Item {
                                 Layout.fillWidth: true
                                 visible: root.cfg.showAppearance !== false
                                 theme: root.t
-                                dark: root.dark
+                                dark: root.systemDark
                                 animationsEnabled: root.t.animations
                             }
 

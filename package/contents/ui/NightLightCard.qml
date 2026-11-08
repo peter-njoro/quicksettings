@@ -3,7 +3,6 @@
 
 import QtQuick
 
-import org.kde.kcmutils as KCMUtils
 import org.kde.plasma.plasma5support as Plasma5Support
 
 import "components" as Components
@@ -12,16 +11,22 @@ Item {
     id: root
 
     property var theme: null
-    property bool running: false
+    property bool nightLightEnabled: false
     property bool stateAvailable: false
     property bool stateErrorReported: false
 
     readonly property string stateQuery: "qdbus6 org.kde.KWin "
         + "/org/kde/KWin/NightLight org.freedesktop.DBus.Properties.Get "
-        + "org.kde.KWin.NightLight running"
+        + "org.kde.KWin.NightLight enabled"
 
     implicitWidth: circleButton.implicitWidth
     implicitHeight: circleButton.implicitHeight
+
+    function setNightLightEnabled(enable) {
+        root.nightLightEnabled = enable;
+        executable.connectSource("kwriteconfig6 --file kwinrc --group NightColor "
+            + "--key Active " + (enable ? "true" : "false") + " --type bool --notify");
+    }
 
     Plasma5Support.DataSource {
         id: stateSource
@@ -39,7 +44,7 @@ Item {
                 root.stateAvailable = false;
                 if (!root.stateErrorReported) {
                     console.warn("Could not read the KWin Night Light state:",
-                                 data.stderr || data.exitStatus || i18n("Unknown error"));
+                                 data.stderr || data.exitStatus || "unknown error");
                     root.stateErrorReported = true;
                 }
                 return;
@@ -47,7 +52,17 @@ Item {
 
             root.stateAvailable = true;
             root.stateErrorReported = false;
-            root.running = String(data.stdout || "").trim() === "true";
+            root.nightLightEnabled = String(data.stdout || "").trim() === "true";
+        }
+    }
+
+    Plasma5Support.DataSource {
+        id: executable
+
+        engine: "executable"
+
+        onNewData: function(sourceName, data) {
+            executable.disconnectSource(sourceName);
         }
     }
 
@@ -56,11 +71,17 @@ Item {
 
         anchors.fill: parent
         theme: root.theme
-        iconName: "weather-clear-night"
+        iconName: Qt.resolvedUrl("../icons/night-light.svg")
+        iconIsMask: true
         label: i18n("Night Light")
         statusText: root.stateAvailable
-            ? (root.running ? i18n("On") : i18n("Off")) : i18n("Unavailable")
-        active: root.stateAvailable && root.running
-        onActivated: KCMUtils.KCMLauncher.openSystemSettings("kcm_nightlight")
+            ? (root.nightLightEnabled ? i18n("On") : i18n("Off")) : i18n("Unavailable")
+        active: root.stateAvailable && root.nightLightEnabled
+        onActivated: {
+            if (!root.stateAvailable) {
+                return;
+            }
+            root.setNightLightEnabled(!root.nightLightEnabled);
+        }
     }
 }

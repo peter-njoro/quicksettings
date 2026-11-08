@@ -34,6 +34,7 @@ PlasmoidItem {
 
     fullRepresentation: MainView {
         dark: root.dark
+        systemDark: root.systemDark
         configuration: plasmoid.configuration
         onConfigureRequested: Plasmoid.internalAction("configure").trigger()
     }
