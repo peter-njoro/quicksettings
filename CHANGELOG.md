@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Animation speed and close-on-outside-click settings.
 - Opaque card fallback when the translucent glass effect is disabled.
 - Custom panel icon option with an icon picker in the Appearance configuration tab.
+- Koi-powered appearance view to switch between light and dark profiles.
 
 ### Changed
 
@@ -29,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Use bundled appearance and Night Light icons for their quick controls.
 - Toggle Night Light from its card instead of opening Night Light settings.
 - Base the appearance card state on the system color scheme so enabled means dark.
+- Show appearance card setup state until Koi is connected and onboarded.
 
 ### Fixed
 

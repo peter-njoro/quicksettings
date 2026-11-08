@@ -22,12 +22,21 @@ Item {
 
     readonly property var cfg: configuration || plasmoid.configuration
     readonly property var t: theme || localTheme
+    readonly property var koi: koiControllerInstance
+    readonly property bool koiConnected: koiControllerInstance.connected
+    readonly property bool koiOnboarded: cfg.koiOnboarded === true
 
     implicitWidth: Kirigami.Units.gridUnit * 22
     implicitHeight: Kirigami.Units.gridUnit * 32
 
+    Component.onCompleted: koiControllerInstance.checkKoi()
+
     function resetToMain() {
         currentPage = 0;
+    }
+
+    KoiController {
+        id: koiControllerInstance
     }
 
     Components.Theme {
@@ -70,6 +79,8 @@ Item {
                 return powerPage;
             case 4:
                 return bluetoothPage;
+            case 5:
+                return appearancePage;
             default:
                 return mainPage;
             }
@@ -175,7 +186,10 @@ Item {
                                 visible: root.cfg.showAppearance !== false
                                 theme: root.t
                                 dark: root.systemDark
+                                koiConnected: root.koiConnected
+                                koiOnboarded: root.koiOnboarded
                                 animationsEnabled: root.t.animations
+                                onActivated: root.currentPage = 5
                             }
 
                             NightLightCard {
@@ -305,6 +319,19 @@ Item {
             theme: root.t
             configuration: root.cfg
             onBackRequested: root.currentPage = 0
+        }
+    }
+
+    Component {
+        id: appearancePage
+
+        AppearanceDetailsView {
+            theme: root.t
+            koiController: root.koi
+            dark: root.systemDark
+            onboarded: root.koiOnboarded
+            onBackRequested: root.currentPage = 0
+            onKoiOnboarded: root.cfg.koiOnboarded = true
         }
     }
 }
