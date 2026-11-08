@@ -40,11 +40,11 @@ Item {
                 return;
             }
 
-            if (data.exitCode !== undefined && Number(data.exitCode) !== 0) {
+            if (data["exit code"] !== undefined && Number(data["exit code"]) !== 0) {
                 root.stateAvailable = false;
                 if (!root.stateErrorReported) {
                     console.warn("Could not read the KWin Night Light state:",
-                                 data.stderr || data.exitStatus || "unknown error");
+                                 data.stderr || data["exit status"] || "unknown error");
                     root.stateErrorReported = true;
                 }
                 return;

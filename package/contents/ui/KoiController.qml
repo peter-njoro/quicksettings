@@ -36,7 +36,8 @@ Item {
 
         onNewData: function(sourceName, data) {
             disconnectSource(sourceName);
-            const exitCode = Number(data.exitCode !== undefined ? data.exitCode : data.exitStatus);
+            const exitCode = Number(data["exit code"] !== undefined
+                ? data["exit code"] : data["exit status"]);
             if (sourceName === root.installCheckCommand) {
                 root.installed = exitCode === 0;
                 root.installedChecked(root.installed);
