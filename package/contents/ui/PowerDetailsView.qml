@@ -178,8 +178,9 @@ Item {
                     Repeater {
                         model: powerProfiles.profiles
 
-                        delegate: QQC2.Button {
+                        delegate: Components.ActionButton {
                             Layout.fillWidth: true
+                            primary: powerProfiles.activeProfile === modelData
                             text: root.profileLabel(modelData)
                             checkable: true
                             checked: powerProfiles.activeProfile === modelData

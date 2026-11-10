@@ -29,7 +29,7 @@ ColumnLayout {
     signal iconClicked()
 
     readonly property var t: theme || fallbackTheme
-    readonly property bool hovered: iconButton.hovered
+    readonly property bool hovered: slider.hovered || slider.pressed
 
     Components.Theme { id: fallbackTheme }
 
@@ -70,11 +70,11 @@ ColumnLayout {
         id: slider
 
         Layout.fillWidth: true
-        implicitHeight: 28
+        implicitHeight: 32
         leftPadding: 8
         rightPadding: 8
-        topPadding: 6
-        bottomPadding: 6
+        topPadding: 8
+        bottomPadding: 8
         snapMode: QQC2.Slider.SnapOnRelease
         enabled: root.interactive
         from: root.from
@@ -94,9 +94,9 @@ ColumnLayout {
             x: slider.leftPadding
             y: slider.topPadding + slider.availableHeight / 2 - height / 2
             width: slider.availableWidth
-            height: 6
+            height: 5
             radius: height / 2
-            color: root.t.alpha(root.t.text, 0.16)
+            color: root.t.inactive
 
             Rectangle {
                 width: slider.visualPosition * parent.width
@@ -107,14 +107,20 @@ ColumnLayout {
         }
 
         handle: Rectangle {
+            id: thumb
+
             x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
             y: slider.topPadding + slider.availableHeight / 2 - height / 2
-            width: 16
+            width: slider.hovered || slider.pressed ? 16 : 12
             height: width
             radius: width / 2
             color: "#ffffff"
             border.width: 1
-            border.color: root.t.alpha(root.t.text, 0.48)
+            border.color: root.t.alpha(root.t.text, 0.28)
+
+            Behavior on width {
+                NumberAnimation { duration: root.t.shortAnimationDuration }
+            }
         }
 
         Behavior on value {

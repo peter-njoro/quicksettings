@@ -21,7 +21,6 @@ Item {
 
     implicitWidth: circleButton.implicitWidth
     implicitHeight: circleButton.implicitHeight
-
     function setNightLightEnabled(enable) {
         root.nightLightEnabled = enable;
         executable.connectSource("kwriteconfig6 --file kwinrc --group NightColor "
@@ -82,6 +81,23 @@ Item {
                 return;
             }
             root.setNightLightEnabled(!root.nightLightEnabled);
+        }
+    }
+
+    Components.PillToggle {
+        anchors.top: parent.top
+        anchors.topMargin: root.theme ? root.theme.spacingXs : 4
+        anchors.right: parent.right
+        anchors.rightMargin: root.theme ? root.theme.spacingXs : 4
+        z: 2
+        theme: root.theme
+        checked: root.stateAvailable && root.nightLightEnabled
+        interactive: root.stateAvailable
+        tooltip: i18n("Toggle Night Light")
+        onToggled: {
+            if (root.stateAvailable) {
+                root.setNightLightEnabled(!root.nightLightEnabled);
+            }
         }
     }
 }

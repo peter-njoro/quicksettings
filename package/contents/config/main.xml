@@ -27,7 +27,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
             <default>true</default>
         </entry>
         <entry name="cornerRadius" type="Int">
-            <default>22</default>
+            <default>24</default>
             <min>0</min>
             <max>40</max>
         </entry>

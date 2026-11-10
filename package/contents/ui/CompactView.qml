@@ -13,6 +13,7 @@ Item {
 
     property bool useCustomIcon: false
     property string iconName: ""
+    property bool popupOpen: false
 
     readonly property bool showCustomIcon: useCustomIcon && iconName.length > 0
     readonly property url defaultIcon: Qt.resolvedUrl("../icons/quick-settings.svg")
@@ -24,11 +25,13 @@ Item {
     readonly property bool hovered: hoverHandler.hovered
 
     Rectangle {
-        id: background
-
         anchors.fill: parent
-        radius: Kirigami.Units.cornerRadius
-        color: root.hovered ? Qt.rgba(1, 1, 1, 0.12) : "transparent"
+        radius: 11
+        color: tapHandler.pressed
+            ? Qt.rgba(1, 1, 1, 0.07)
+            : ((root.hovered || root.popupOpen) ? Qt.rgba(1, 1, 1, 0.12)
+                : (Kirigami.Theme.backgroundColor.hslLightness < 0.5
+                    ? "transparent" : Qt.rgba(0, 0, 0, 0.06)))
 
         Behavior on color {
             ColorAnimation { duration: Kirigami.Units.shortDuration }
@@ -62,6 +65,8 @@ Item {
     }
 
     TapHandler {
+        id: tapHandler
+
         acceptedButtons: Qt.LeftButton
         onTapped: root.activated()
     }

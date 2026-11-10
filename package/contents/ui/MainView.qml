@@ -26,7 +26,7 @@ Item {
     readonly property bool koiConnected: koiControllerInstance.connected
     readonly property bool koiOnboarded: cfg.koiOnboarded === true
 
-    implicitWidth: Kirigami.Units.gridUnit * 22
+    implicitWidth: 390
     implicitHeight: Kirigami.Units.gridUnit * 32
 
     Component.onCompleted: koiControllerInstance.checkKoi()
@@ -46,7 +46,7 @@ Item {
         followAccent: root.cfg.followAccent !== false
         transparency: (root.cfg.transparency !== undefined ? root.cfg.transparency : 85) / 100
         blur: root.cfg.blur !== false
-        radius: root.cfg.cornerRadius !== undefined ? root.cfg.cornerRadius : 22
+        radius: root.cfg.cornerRadius !== undefined ? root.cfg.cornerRadius : 24
         animations: root.cfg.animations !== false
         animationSpeed: (root.cfg.animationSpeed !== undefined ? root.cfg.animationSpeed : 100) / 100
         compact: root.cfg.compactSpacing === true
@@ -54,7 +54,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        radius: root.t.radius
+        radius: root.t.popupRadius
         clip: true
         gradient: Gradient {
             GradientStop { position: 0.0; color: root.t.backgroundTop }
@@ -68,7 +68,7 @@ Item {
         id: pageLoader
 
         anchors.fill: parent
-        anchors.margins: root.t.compact ? root.t.spacing : root.t.spacing * 1.25
+        anchors.margins: root.t.padding
         sourceComponent: {
             switch (root.currentPage) {
             case 1:
@@ -93,7 +93,7 @@ Item {
         Item {
             ColumnLayout {
                 anchors.fill: parent
-                spacing: root.t.spacing
+                spacing: root.t.sectionSpacing
 
                 Header {
                     Layout.fillWidth: true
@@ -115,7 +115,7 @@ Item {
 
                     ColumnLayout {
                         width: mainScroll.availableWidth
-                        spacing: root.t.spacing
+                        spacing: root.t.sectionSpacing
 
                         RowLayout {
                             Layout.fillWidth: true
@@ -123,6 +123,7 @@ Item {
                             Layout.minimumHeight: connectivityColumn.implicitHeight
                             visible: connectivityColumn.visible
                                 || (root.cfg.showMedia !== false)
+                            spacing: root.t.spacing
 
                             ColumnLayout {
                                 id: connectivityColumn
@@ -175,8 +176,7 @@ Item {
                                 || root.cfg.showAppearance !== false
                                 || root.cfg.showNightLight !== false
 
-                            FocusCard {
-                                Layout.fillWidth: true
+                            FocusCard {                                Layout.fillWidth: true
                                 visible: root.cfg.showFocus !== false
                                 theme: root.t
                             }
@@ -211,27 +211,25 @@ Item {
 
                         Components.GlassCard {
                             Layout.fillWidth: true
-                            visible: root.cfg.showBrightness !== false && brightnessControl.available
+                            visible: (root.cfg.showBrightness !== false && brightnessControl.available)
+                                || (root.cfg.showVolume !== false && volumeControl.available)
                             theme: root.t
 
-                            BrightnessControl {
-                                id: brightnessControl
+                            ColumnLayout {
                                 Layout.fillWidth: true
-                                theme: root.t
-                            }
-                        }
+                                spacing: root.t.spacing
 
-                        Components.GlassCard {
-                            Layout.fillWidth: true
-                            visible: root.cfg.showVolume !== false && volumeControl.available
-                            theme: root.t
-                            interactive: volumeControl.available
-                            onClicked: root.currentPage = 2
+                                BrightnessControl {
+                                    id: brightnessControl
+                                    Layout.fillWidth: true
+                                    theme: root.t
+                                }
 
-                            VolumeControl {
-                                id: volumeControl
-                                Layout.fillWidth: true
-                                theme: root.t
+                                VolumeControl {
+                                    id: volumeControl
+                                    Layout.fillWidth: true
+                                    theme: root.t
+                                }
                             }
                         }
 

@@ -15,42 +15,63 @@ QtObject {
     property bool blur: true
     property bool compact: false
     property real transparency: 0.85
-    property real radius: 22
+    property real radius: 24
 
     readonly property real glassStrength: 0.55 + 0.45 * Math.max(0, Math.min(1, transparency))
 
-    readonly property color accent: followAccent ? Kirigami.Theme.highlightColor : "#0a84ff"
-    readonly property color backgroundTop: dark
-        ? Qt.rgba(0.10, 0.12, 0.17, blur ? 0.74 * glassStrength : 0.98)
-        : Qt.rgba(0.95, 0.96, 0.99, blur ? 0.84 * glassStrength : 0.99)
-    readonly property color background: dark
-        ? Qt.rgba(0.055, 0.065, 0.095, blur ? 0.84 * glassStrength : 0.98)
-        : Qt.rgba(0.88, 0.90, 0.95, blur ? 0.88 * glassStrength : 0.99)
-    readonly property color card: dark
-        ? Qt.rgba(0.29, 0.32, 0.39, blur ? 0.42 * glassStrength : 0.98)
-        : Qt.rgba(1.0, 1.0, 1.0, blur ? 0.58 * glassStrength : 0.99)
-    readonly property color cardHover: dark
-        ? Qt.rgba(0.37, 0.40, 0.48, blur ? 0.54 * glassStrength : 1.0)
-        : Qt.rgba(1.0, 1.0, 1.0, blur ? 0.76 * glassStrength : 1.0)
-    readonly property color cardSheen: dark
-        ? Qt.rgba(1.0, 1.0, 1.0, 0.035)
-        : Qt.rgba(1.0, 1.0, 1.0, 0.12)
-    readonly property color border: dark
-        ? Qt.rgba(1, 1, 1, 0.15)
-        : Qt.rgba(0.12, 0.15, 0.21, 0.10)
-    readonly property color text: dark ? "#f5f6fa" : "#1d2430"
-    readonly property color muted: dark ? "#b2b9c7" : "#626a78"
-    readonly property color inactive: dark ? "#626b7a" : "#c2c7d0"
-    readonly property color danger: dark ? "#ff7b72" : "#c01c28"
+    // Surface levels: main popup (24), cards (~17), interactive elements (12).
+    readonly property int popupRadius: Math.round(radius)
+    readonly property int cardRadius: Math.round(Math.max(12, Math.min(18, radius * 0.73)))
+    readonly property int controlRadius: Math.round(Math.max(8, Math.min(13, radius * 0.5)))
 
-    readonly property int spacing: compact ? Kirigami.Units.smallSpacing : Kirigami.Units.largeSpacing
+    // Spacing scale (4/8/12/16/20/24), softened for compact mode.
+    readonly property int spacingXs: Math.round(compact ? 3 : 4)
+    readonly property int spacingS: Math.round(compact ? 6 : 8)
+    readonly property int spacingM: Math.round(compact ? 9 : 12)
+    readonly property int padding: Math.round(compact ? 12 : 16)
+    readonly property int sectionSpacing: Math.round(compact ? 15 : 20)
+    readonly property int majorSpacing: Math.round(compact ? 18 : 24)
+
     readonly property int cardPadding: compact
-        ? Math.round(Kirigami.Units.smallSpacing * 1.5)
-        : Math.round(Kirigami.Units.gridUnit * 0.65)
+        ? Math.round(Kirigami.Units.smallSpacing * 1.25)
+        : Math.round(Kirigami.Units.gridUnit * 0.55)
+
     readonly property int animationDuration: animations
         ? Math.round(Kirigami.Units.longDuration * animationSpeed) : 0
     readonly property int shortAnimationDuration: animations
         ? Math.round(Kirigami.Units.shortDuration * animationSpeed) : 0
+
+    readonly property color accent: followAccent ? Kirigami.Theme.highlightColor : "#0a84ff"
+
+    // Level 1: main popup. Slightly lighter at the top for depth.
+    readonly property color backgroundTop: dark
+        ? Qt.rgba(0.165, 0.169, 0.188, blur ? 0.9 * glassStrength : 1.0)
+        : Qt.rgba(0.969, 0.973, 0.98, blur ? 0.92 * glassStrength : 1.0)
+    readonly property color background: dark
+        ? Qt.rgba(0.145, 0.149, 0.169, blur ? 0.9 * glassStrength : 1.0)
+        : Qt.rgba(0.957, 0.961, 0.969, blur ? 0.92 * glassStrength : 1.0)
+
+    // Level 2: cards. Translucent while blurred, opaque otherwise.
+    readonly property color card: dark
+        ? Qt.rgba(0.188, 0.192, 0.22, blur ? 0.78 * glassStrength : 1.0)
+        : Qt.rgba(1.0, 1.0, 1.0, blur ? 0.78 * glassStrength : 1.0)
+    readonly property color cardHover: dark
+        ? Qt.rgba(0.235, 0.239, 0.267, blur ? 0.88 * glassStrength : 1.0)
+        : Qt.rgba(1.0, 1.0, 1.0, blur ? 0.94 * glassStrength : 1.0)
+
+    readonly property color border: dark
+        ? Qt.rgba(1, 1, 1, 0.13)
+        : Qt.rgba(0, 0, 0, 0.09)
+    readonly property color borderHover: dark
+        ? Qt.rgba(1, 1, 1, 0.2)
+        : Qt.rgba(0, 0, 0, 0.14)
+
+    readonly property color text: dark ? "#F4F4F5" : "#202127"
+    readonly property color muted: dark ? "#A5A6AE" : "#777982"
+    readonly property color inactive: dark ? "#55565D" : "#D5D6DB"
+    readonly property color danger: dark ? "#ff7b72" : "#c01c28"
+
+    readonly property int spacing: spacingM
 
     function alpha(color, value) {
         return Qt.rgba(color.r, color.g, color.b, value);

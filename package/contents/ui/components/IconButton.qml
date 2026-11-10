@@ -26,7 +26,7 @@ Item {
     Components.Theme { id: fallbackTheme }
 
     implicitWidth: Math.max(iconSize + Kirigami.Units.smallSpacing * 1.5,
-                            Kirigami.Units.gridUnit * 1.6)
+                            32)
     implicitHeight: implicitWidth
     opacity: interactive ? 1.0 : 0.45
 
@@ -36,8 +36,8 @@ Item {
         color: root.checked
             ? root.t.alpha(root.t.accent, 0.24)
             : (root.hovered && root.interactive
-                ? root.t.alpha(root.t.text, 0.15)
-                : root.t.alpha(root.t.text, 0.07))
+                ? root.t.alpha(root.t.text, 0.12)
+                : root.t.alpha(root.t.text, 0.0))
 
         Behavior on color {
             ColorAnimation { duration: root.t.shortAnimationDuration }

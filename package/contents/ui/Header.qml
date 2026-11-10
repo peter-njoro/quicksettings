@@ -54,10 +54,25 @@ Item {
         }
 
         PlasmaComponents3.ToolButton {
+            id: menuButton
+
             icon.name: "application-menu"
             text: i18n("Widget menu")
             display: PlasmaComponents3.ToolButton.IconOnly
             onClicked: menu.open()
+
+            background: Rectangle {
+                implicitWidth: 32
+                implicitHeight: 32
+                radius: root.t.controlRadius
+                color: menuButton.hovered
+                    ? root.t.alpha(root.t.text, 0.08)
+                    : root.t.alpha(root.t.text, 0.0)
+
+                Behavior on color {
+                    ColorAnimation { duration: root.t.shortAnimationDuration }
+                }
+            }
 
             QQC2.Menu {
                 id: menu

@@ -24,89 +24,87 @@ Item {
 
     readonly property var t: theme || fallbackTheme
     readonly property bool hovered: hoverHandler.hovered
-    readonly property real circleSize: Math.min(width, Kirigami.Units.gridUnit * 3.2)
 
     Components.Theme { id: fallbackTheme }
 
-    implicitWidth: Kirigami.Units.gridUnit * 4
-    implicitHeight: Kirigami.Units.gridUnit * 3.2 + Kirigami.Units.largeSpacing
-        + labelColumn.implicitHeight
+    implicitWidth: 0
+    implicitHeight: 88
     opacity: interactive ? 1.0 : 0.5
 
     Rectangle {
-        anchors.centerIn: circle
-        width: circle.width + 8
-        height: width
-        radius: width / 2
-        color: root.active ? root.t.alpha(root.t.accent, 0.12) : "transparent"
-        visible: root.active
-
-        Behavior on color {
-            ColorAnimation { duration: root.t.animationDuration }
-        }
-    }
-
-    Rectangle {
-        id: circle
-
-        anchors.horizontalCenter: parent.horizontalCenter
-        y: 0
-        width: root.circleSize
-        height: width
-        radius: width / 2
-        color: root.active
-            ? root.t.alpha(root.t.accent, root.hovered ? 0.34 : 0.25)
-            : (root.hovered ? root.t.cardHover : root.t.card)
+        anchors.fill: parent
+        radius: root.t.cardRadius
+        color: root.interactive && root.hovered
+            ? root.t.cardHover
+            : (root.active
+                ? root.t.alpha(root.t.accent, 0.10) : root.t.card)
         border.width: 1
         border.color: root.active
-            ? root.t.alpha(root.t.accent, 0.72) : root.t.border
+            ? root.t.alpha(root.t.accent, 0.5)
+            : (root.interactive && root.hovered ? root.t.borderHover : root.t.border)
 
         Behavior on color {
             ColorAnimation { duration: root.t.animationDuration }
         }
+
         Behavior on border.color {
             ColorAnimation { duration: root.t.shortAnimationDuration }
         }
 
-        Kirigami.Icon {
-            anchors.centerIn: parent
-            width: Kirigami.Units.iconSizes.medium
-            height: width
-            source: root.iconName
-            isMask: root.iconIsMask
-            color: root.active ? root.t.accent : root.t.text
-        }
-    }
+        ColumnLayout {
+            anchors.fill: parent
+            anchors.margins: root.t.spacingS
+            spacing: root.t.spacingXs
 
-    ColumnLayout {
-        id: labelColumn
+            Rectangle {
+                // Icon tile: a small neutral surface so the glyph reads cleanly.
+                Layout.alignment: Qt.AlignHCenter
+                width: 36
+                height: width
+                radius: root.t.controlRadius
+                color: root.active
+                    ? root.t.alpha(root.t.accent, 0.18)
+                    : root.t.alpha(root.t.text, 0.06)
 
-        anchors.top: circle.bottom
-        anchors.topMargin: Kirigami.Units.smallSpacing
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: parent.width
-        spacing: 0
+                Behavior on color {
+                    ColorAnimation { duration: root.t.animationDuration }
+                }
 
-        PlasmaComponents3.Label {
-            Layout.fillWidth: true
-            text: root.label
-            color: root.t.text
-            font.weight: Font.DemiBold
-            horizontalAlignment: Text.AlignHCenter
-            elide: Text.ElideRight
-            textFormat: Text.PlainText
-        }
+                Kirigami.Icon {
+                    anchors.centerIn: parent
+                    width: Kirigami.Units.iconSizes.small + 2
+                    height: width
+                    source: root.iconName
+                    isMask: root.iconIsMask
+                    color: root.active ? root.t.accent : root.t.text
+                    opacity: root.interactive ? 1.0 : 0.6
+                }
+            }
 
-        PlasmaComponents3.Label {
-            Layout.fillWidth: true
-            visible: root.statusText.length > 0
-            text: root.statusText
-            color: root.active ? root.t.accent : root.t.muted
-            font.pointSize: Kirigami.Theme.smallFont.pointSize
-            horizontalAlignment: Text.AlignHCenter
-            elide: Text.ElideRight
-            maximumLineCount: 1
-            textFormat: Text.PlainText
+            PlasmaComponents3.Label {
+                Layout.alignment: Qt.AlignHCenter
+                Layout.fillWidth: true
+                text: root.label
+                color: root.t.text
+                font.weight: Font.DemiBold
+                font.pointSize: Kirigami.Theme.smallFont.pointSize + 1
+                horizontalAlignment: Text.AlignHCenter
+                elide: Text.ElideRight
+                textFormat: Text.PlainText
+            }
+
+            PlasmaComponents3.Label {
+                Layout.alignment: Qt.AlignHCenter
+                Layout.fillWidth: true
+                visible: root.statusText.length > 0
+                text: root.statusText
+                color: root.active ? root.t.accent : root.t.muted
+                font.pointSize: Kirigami.Theme.smallFont.pointSize
+                horizontalAlignment: Text.AlignHCenter
+                elide: Text.ElideRight
+                maximumLineCount: 1
+                textFormat: Text.PlainText
+            }
         }
     }
 

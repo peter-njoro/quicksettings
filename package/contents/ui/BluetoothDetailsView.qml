@@ -140,8 +140,9 @@ Item {
                                 }
                             }
 
-                            PlasmaComponents3.Button {
+                            Components.ActionButton {
                                 Layout.alignment: Qt.AlignVCenter
+                                primary: !device.connected
                                 text: device.connected ? i18n("Disconnect") : i18n("Connect")
                                 enabled: root.btAdapter && root.btAdapter.powered
                                 onClicked: root.toggleBluetoothDevice(device)

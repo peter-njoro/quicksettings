@@ -12,7 +12,6 @@ Rectangle {
     default property alias content: contentItem.data
     property var theme: null
     property bool interactive: false
-    property bool elevated: false
 
     signal clicked()
 
@@ -24,10 +23,10 @@ Rectangle {
     implicitWidth: contentItem.implicitWidth + t.cardPadding * 2
     implicitHeight: contentItem.implicitHeight + t.cardPadding * 2
 
-    radius: Math.max(0, t.radius * 0.9)
+    radius: t.cardRadius
     color: interactive && hovered ? t.cardHover : t.card
     border.width: 1
-    border.color: interactive && hovered ? t.alpha(t.accent, 0.42) : t.border
+    border.color: interactive && hovered ? t.borderHover : t.border
 
     Behavior on color {
         ColorAnimation { duration: card.t.animationDuration }
@@ -35,14 +34,6 @@ Rectangle {
 
     Behavior on border.color {
         ColorAnimation { duration: card.t.shortAnimationDuration }
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        radius: card.radius
-        color: card.t.cardSheen
-        border.width: 1
-        border.color: card.t.alpha(card.t.text, 0.045)
     }
 
     ColumnLayout {

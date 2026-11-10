@@ -29,6 +29,7 @@ PlasmoidItem {
     compactRepresentation: CompactView {
         useCustomIcon: root.useCustomIcon
         iconName: root.customIcon
+        popupOpen: root.expanded
         onActivated: root.expanded = !root.expanded
     }
 

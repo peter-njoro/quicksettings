@@ -135,8 +135,9 @@ Item {
                             Layout.fillWidth: true
                             spacing: root.t.spacing
 
-                            PlasmaComponents3.Button {
+                            Components.ActionButton {
                                 Layout.fillWidth: true
+                                primary: true
                                 text: root.missingKoi ? i18n("Get Koi") : i18n("Open Koi")
                                 icon.name: root.missingKoi ? "install-hdd" : "application-x-kde-sysinfo"
                                 onClicked: {
@@ -148,14 +149,14 @@ Item {
                                 }
                             }
 
-                            PlasmaComponents3.Button {
+                            Components.ActionButton {
                                 Layout.fillWidth: true
                                 visible: root.missingKoi || root.needsLaunch
                                 text: root.missingKoi ? i18n("I've installed Koi") : i18n("Recheck connection")
                                 onClicked: koi.checkKoi()
                             }
 
-                            PlasmaComponents3.Button {
+                            Components.ActionButton {
                                 Layout.fillWidth: true
                                 visible: root.needsProfiles
                                 text: i18n("Continue")
