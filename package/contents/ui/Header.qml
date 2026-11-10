@@ -64,7 +64,7 @@ Item {
             background: Rectangle {
                 implicitWidth: 32
                 implicitHeight: 32
-                radius: root.t.controlRadius
+                radius: height / 2
                 color: menuButton.hovered
                     ? root.t.alpha(root.t.text, 0.08)
                     : root.t.alpha(root.t.text, 0.0)

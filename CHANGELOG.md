@@ -22,6 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Refine the glass surfaces with a soft top sheen, a thin specular edge, lighter frosted card veils and larger corner radii.
+- Show filled accent circles with contrasting glyphs for active Wi-Fi, Bluetooth, Focus, Appearance and Night Light controls.
+- Use thicker sliders with a round white thumb, larger pill toggles with a white thumb, and capsule-shaped buttons.
 - Apply the refined glass design system with layered translucent surfaces, rounded shapes and consistent spacing in light and dark appearance.
 - Restyle the focus, appearance and Night Light tiles as compact rounded cards with icon tiles and subtle accent indicators.
 - Add a pill toggle to the Night Light card with a subtle accent active state.

@@ -150,12 +150,12 @@ Components.GlassCard {
 
                     Rectangle {
                         anchors.fill: parent
-                        radius: Kirigami.Units.cornerRadius
-                        color: root.t.alpha(root.t.text, 0.08)
-                        border.width: 1
-                        border.color: serviceEnabled
-                            ? root.t.alpha(root.t.accent, 0.25)
-                            : root.t.border
+                        radius: width / 2
+                        color: root.serviceEnabled ? root.t.accent : root.t.controlOff
+
+                        Behavior on color {
+                            ColorAnimation { duration: root.t.animationDuration }
+                        }
                     }
 
                     Kirigami.Icon {
@@ -166,7 +166,7 @@ Components.GlassCard {
                             ? Qt.resolvedUrl("../icons/wifi.svg")
                             : Qt.resolvedUrl("../icons/bluetooth.svg")
                         isMask: true
-                        color: root.serviceEnabled ? root.t.accent : root.t.text
+                        color: root.serviceEnabled ? root.t.onAccent : root.t.text
                         opacity: root.adapterAvailable ? 1.0 : 0.4
                     }
                 }

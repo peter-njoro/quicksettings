@@ -32,9 +32,7 @@ PlasmaComponents3.Button {
     icon.color: "transparent"
 
     background: Rectangle {
-        radius: root.primary
-            ? Math.round(root.t.controlRadius)
-            : Math.round(root.t.controlRadius - 1)
+        radius: height / 2
         color: {
             if (root.primary) {
                 if (root.pressed) {

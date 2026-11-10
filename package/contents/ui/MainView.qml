@@ -64,6 +64,12 @@ Item {
         border.color: root.t.border
     }
 
+    Components.GlassSheen {
+        anchors.fill: parent
+        theme: root.t
+        radius: root.t.popupRadius
+    }
+
     Loader {
         id: pageLoader
 

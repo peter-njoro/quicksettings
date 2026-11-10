@@ -70,11 +70,11 @@ ColumnLayout {
         id: slider
 
         Layout.fillWidth: true
-        implicitHeight: 32
-        leftPadding: 8
-        rightPadding: 8
-        topPadding: 8
-        bottomPadding: 8
+        implicitHeight: 34
+        leftPadding: 4
+        rightPadding: 4
+        topPadding: 5
+        bottomPadding: 5
         snapMode: QQC2.Slider.SnapOnRelease
         enabled: root.interactive
         from: root.from
@@ -94,7 +94,7 @@ ColumnLayout {
             x: slider.leftPadding
             y: slider.topPadding + slider.availableHeight / 2 - height / 2
             width: slider.availableWidth
-            height: 8
+            height: 12
             radius: height / 2
             color: root.t.inactive
 
@@ -111,12 +111,12 @@ ColumnLayout {
 
             x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
             y: slider.topPadding + slider.availableHeight / 2 - height / 2
-            width: slider.hovered || slider.pressed ? 18 : 16
-            height: 22
-            radius: 6
+            width: slider.hovered || slider.pressed ? 26 : 24
+            height: width
+            radius: width / 2
             color: "#ffffff"
             border.width: 1
-            border.color: root.t.alpha(root.t.text, 0.28)
+            border.color: root.t.alpha("#000000", 0.14)
 
             Behavior on width {
                 NumberAnimation { duration: root.t.shortAnimationDuration }
