@@ -22,8 +22,8 @@ Item {
 
     Components.Theme { id: fallbackTheme }
 
-    implicitWidth: 42
-    implicitHeight: 24
+    implicitWidth: 50
+    implicitHeight: 30
     opacity: root.interactive ? 1.0 : 0.4
 
     Rectangle {
@@ -39,13 +39,14 @@ Item {
     Rectangle {
         id: thumb
 
-        width: 18
+        width: 26
         height: width
         radius: width / 2
-        // White on the accent track; neutral on the inactive track.
-        color: root.checked ? "#FFFFFF" : root.t.text
+        color: "#FFFFFF"
+        border.width: 1
+        border.color: root.t.alpha("#000000", 0.1)
         y: (parent.height - height) / 2
-        x: root.checked ? parent.width - width - 3 : 3
+        x: root.checked ? parent.width - width - 2 : 2
 
         Behavior on x {
             NumberAnimation {

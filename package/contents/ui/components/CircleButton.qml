@@ -28,20 +28,15 @@ Item {
     Components.Theme { id: fallbackTheme }
 
     implicitWidth: 0
-    implicitHeight: 88
+    implicitHeight: 92
     opacity: interactive ? 1.0 : 0.5
 
     Rectangle {
         anchors.fill: parent
         radius: root.t.cardRadius
-        color: root.interactive && root.hovered
-            ? root.t.cardHover
-            : (root.active
-                ? root.t.alpha(root.t.accent, 0.10) : root.t.card)
+        color: root.interactive && root.hovered ? root.t.cardHover : root.t.card
         border.width: 1
-        border.color: root.active
-            ? root.t.alpha(root.t.accent, 0.5)
-            : (root.interactive && root.hovered ? root.t.borderHover : root.t.border)
+        border.color: root.interactive && root.hovered ? root.t.borderHover : root.t.border
 
         Behavior on color {
             ColorAnimation { duration: root.t.animationDuration }
@@ -49,6 +44,12 @@ Item {
 
         Behavior on border.color {
             ColorAnimation { duration: root.t.shortAnimationDuration }
+        }
+
+        Components.GlassSheen {
+            anchors.fill: parent
+            theme: root.t
+            radius: parent.radius
         }
 
         ColumnLayout {
@@ -59,12 +60,10 @@ Item {
             Rectangle {
                 // Round icon tile.
                 Layout.alignment: Qt.AlignHCenter
-                width: 28
+                width: 32
                 height: width
                 radius: width / 2
-                color: root.active
-                    ? root.t.alpha(root.t.accent, 0.16)
-                    : root.t.alpha(root.t.text, 0.06)
+                color: root.active ? root.t.accent : root.t.controlOff
 
                 Behavior on color {
                     ColorAnimation { duration: root.t.animationDuration }
@@ -72,11 +71,11 @@ Item {
 
                 Kirigami.Icon {
                     anchors.centerIn: parent
-                    width: 16
+                    width: 18
                     height: width
                     source: root.iconName
-                    isMask: root.iconIsMask
-                    color: root.active ? root.t.accent : root.t.text
+                    isMask: true
+                    color: root.active ? root.t.onAccent : root.t.text
                     opacity: root.interactive ? 1.0 : 0.6
                 }
             }
@@ -98,7 +97,7 @@ Item {
                 Layout.fillWidth: true
                 visible: root.statusText.length > 0
                 text: root.statusText
-                color: root.active ? root.t.accent : root.t.muted
+                color: root.t.muted
                 font.pointSize: Kirigami.Theme.smallFont.pointSize
                 horizontalAlignment: Text.AlignHCenter
                 elide: Text.ElideRight

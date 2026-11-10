@@ -37,6 +37,12 @@ Rectangle {
         ColorAnimation { duration: card.t.shortAnimationDuration }
     }
 
+    Components.GlassSheen {
+        anchors.fill: parent
+        theme: card.t
+        radius: card.radius
+    }
+
     ColumnLayout {
         id: contentItem
 
