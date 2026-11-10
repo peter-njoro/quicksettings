@@ -12,6 +12,7 @@ Rectangle {
     default property alias content: contentItem.data
     property var theme: null
     property bool interactive: false
+    property real overrideRadius: 0
 
     signal clicked()
 
@@ -23,7 +24,7 @@ Rectangle {
     implicitWidth: contentItem.implicitWidth + t.cardPadding * 2
     implicitHeight: contentItem.implicitHeight + t.cardPadding * 2
 
-    radius: t.cardRadius
+    radius: overrideRadius > 0 ? overrideRadius : t.cardRadius
     color: interactive && hovered ? t.cardHover : t.card
     border.width: 1
     border.color: interactive && hovered ? t.borderHover : t.border

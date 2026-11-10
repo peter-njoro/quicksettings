@@ -57,13 +57,13 @@ Item {
             spacing: root.t.spacingXs
 
             Rectangle {
-                // Icon tile: a small neutral surface so the glyph reads cleanly.
+                // Round icon tile.
                 Layout.alignment: Qt.AlignHCenter
-                width: 36
+                width: 28
                 height: width
-                radius: root.t.controlRadius
+                radius: width / 2
                 color: root.active
-                    ? root.t.alpha(root.t.accent, 0.18)
+                    ? root.t.alpha(root.t.accent, 0.16)
                     : root.t.alpha(root.t.text, 0.06)
 
                 Behavior on color {
@@ -72,7 +72,7 @@ Item {
 
                 Kirigami.Icon {
                     anchors.centerIn: parent
-                    width: Kirigami.Units.iconSizes.small + 2
+                    width: 16
                     height: width
                     source: root.iconName
                     isMask: root.iconIsMask

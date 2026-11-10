@@ -94,7 +94,7 @@ ColumnLayout {
             x: slider.leftPadding
             y: slider.topPadding + slider.availableHeight / 2 - height / 2
             width: slider.availableWidth
-            height: 5
+            height: 8
             radius: height / 2
             color: root.t.inactive
 
@@ -111,9 +111,9 @@ ColumnLayout {
 
             x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
             y: slider.topPadding + slider.availableHeight / 2 - height / 2
-            width: slider.hovered || slider.pressed ? 16 : 12
-            height: width
-            radius: width / 2
+            width: slider.hovered || slider.pressed ? 18 : 16
+            height: 22
+            radius: 6
             color: "#ffffff"
             border.width: 1
             border.color: root.t.alpha(root.t.text, 0.28)

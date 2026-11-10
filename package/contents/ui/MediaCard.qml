@@ -13,6 +13,8 @@ import "components" as Components
 Components.GlassCard {
     id: root
 
+    overrideRadius: t.popupRadius
+
     PlasmaComponents3.Label {
         Layout.fillWidth: true
         text: i18n("Now Playing")

@@ -75,6 +75,7 @@ Components.GlassCard {
     }
 
     interactive: adapterAvailable
+    overrideRadius: t.popupRadius
     onClicked: toggleService()
 
     PlasmaNM.Handler {
@@ -150,12 +151,11 @@ Components.GlassCard {
                     Rectangle {
                         anchors.fill: parent
                         radius: Kirigami.Units.cornerRadius
-                        color: root.serviceEnabled
-                            ? root.t.alpha(root.t.accent, 0.28)
-                            : root.t.alpha(root.t.text, 0.08)
+                        color: root.t.alpha(root.t.text, 0.08)
                         border.width: 1
-                        border.color: root.serviceEnabled
-                            ? root.t.alpha(root.t.accent, 0.56) : root.t.border
+                        border.color: serviceEnabled
+                            ? root.t.alpha(root.t.accent, 0.25)
+                            : root.t.border
                     }
 
                     Kirigami.Icon {
