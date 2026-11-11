@@ -3,6 +3,7 @@
 
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Shapes
 
 import org.kde.plasma.components as PlasmaComponents3
 import org.kde.plasma.networkmanagement as PlasmaNM
@@ -162,12 +163,35 @@ Components.GlassCard {
                         anchors.centerIn: parent
                         width: Kirigami.Units.iconSizes.smallMedium
                         height: width
-                        source: root.isWifi
-                            ? Qt.resolvedUrl("../icons/wifi.svg")
-                            : Qt.resolvedUrl("../icons/bluetooth.svg")
+                        visible: root.isWifi
+                        source: Qt.resolvedUrl("../icons/wifi.svg")
                         isMask: true
                         color: root.serviceEnabled ? root.t.onAccent : root.t.text
                         opacity: root.adapterAvailable ? 1.0 : 0.4
+                    }
+
+                    // Drawn natively: the masked SVG rendered as a solid square.
+                    Shape {
+                        anchors.centerIn: parent
+                        width: 64
+                        height: 64
+                        scale: Kirigami.Units.iconSizes.smallMedium / 64
+                        visible: !root.isWifi
+                        opacity: root.adapterAvailable ? 1.0 : 0.4
+                        layer.enabled: true
+                        layer.samples: 4
+
+                        ShapePath {
+                            strokeColor: root.serviceEnabled ? root.t.onAccent : root.t.text
+                            strokeWidth: 4
+                            fillColor: "transparent"
+                            capStyle: ShapePath.RoundCap
+                            joinStyle: ShapePath.RoundJoin
+
+                            PathSvg {
+                                path: "M30 7.5L46 21.5L32 32L46 42.5L30 56.5V7.5Z M17.5 20L46 42.5 M17.5 44L46 21.5"
+                            }
+                        }
                     }
                 }
 
