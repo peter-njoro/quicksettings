@@ -30,8 +30,9 @@ Item {
     property real mainContentHeight: 0
 
     implicitWidth: 390
-    // Taller main popup lets the complete control layout remain visible without scrolling.
-    implicitHeight: Kirigami.Units.gridUnit * 36
+    implicitHeight: mainContentHeight > 0
+        ? Math.ceil(mainContentHeight + 2 * t.padding)
+        : Kirigami.Units.gridUnit * 32
 
     Component.onCompleted: koiControllerInstance.checkKoi()
 
