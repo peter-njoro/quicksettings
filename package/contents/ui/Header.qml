@@ -7,6 +7,7 @@ import QtQuick.Controls as QQC2
 
 import org.kde.plasma.components as PlasmaComponents3
 import org.kde.plasma.extras as PlasmaExtras
+import org.kde.plasma.private.battery
 import org.kde.kirigami as Kirigami
 
 import "components" as Components
@@ -16,8 +17,31 @@ Item {
 
     property var theme
     property bool showDate: true
+    property bool showBattery: true
 
     signal configureRequested()
+    signal powerRequested()
+
+    BatteryControlModel {
+        id: battery
+    }
+
+    readonly property bool batteryPresent: battery.hasBatteries || battery.hasCumulative
+    readonly property bool batteryCharging: battery.state === BatteryControlModel.Charging
+    readonly property string batteryStateText: {
+        switch (battery.state) {
+        case BatteryControlModel.Charging:
+            return i18n("Charging");
+        case BatteryControlModel.FullyCharged:
+            return i18n("Fully charged");
+        case BatteryControlModel.Discharging:
+            return i18n("On battery");
+        default:
+            return battery.pluggedIn ? i18n("Plugged in") : i18n("Battery status");
+        }
+    }
+    readonly property string batteryTooltip: i18n("%1 percent · %2",
+        battery.percent, batteryStateText)
 
     readonly property var t: theme || fallbackTheme
 
@@ -51,6 +75,39 @@ Item {
                 font.pointSize: Kirigami.Theme.smallFont.pointSize
                 textFormat: Text.PlainText
             }
+        }
+
+        PlasmaComponents3.ToolButton {
+            id: batteryButton
+
+            visible: root.showBattery && root.batteryPresent
+            Layout.preferredWidth: 32
+            Layout.preferredHeight: 32
+            icon.name: root.batteryCharging ? "battery-charging" : "battery"
+            icon.color: root.batteryCharging ? root.t.accent : root.t.text
+            text: root.batteryTooltip
+            display: PlasmaComponents3.ToolButton.IconOnly
+            onClicked: root.powerRequested()
+
+            QQC2.ToolTip.visible: hovered
+            QQC2.ToolTip.text: root.batteryTooltip
+            QQC2.ToolTip.delay: 500
+
+            background: Rectangle {
+                implicitWidth: 32
+                implicitHeight: 32
+                radius: 10
+                color: batteryButton.hovered
+                    ? root.t.alpha(root.t.text, 0.08)
+                    : root.t.alpha(root.t.text, 0.0)
+
+                Behavior on color {
+                    ColorAnimation { duration: root.t.shortAnimationDuration }
+                }
+            }
+
+            Accessible.role: Accessible.Button
+            Accessible.name: i18n("Power settings, %1", root.batteryTooltip)
         }
 
         PlasmaComponents3.ToolButton {

@@ -106,7 +106,9 @@ Item {
                     Layout.fillWidth: true
                     theme: root.t
                     showDate: root.cfg.showHeaderDate !== false
+                    showBattery: root.cfg.showBattery !== false
                     onConfigureRequested: root.configureRequested()
+                    onPowerRequested: root.currentPage = 3
                 }
 
                 ColumnLayout {
@@ -250,15 +252,6 @@ Item {
                                 theme: root.t
                             }
                         }
-                    }
-
-                    BatteryCard {
-                        id: batteryCard
-
-                        Layout.fillWidth: true
-                        visible: root.cfg.showBattery !== false && batteryCard.present
-                        theme: root.t
-                        onActivated: root.currentPage = 3
                     }
 
                     QuickActions {

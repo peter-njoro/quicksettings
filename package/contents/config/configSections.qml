@@ -80,7 +80,7 @@ KCM.SimpleKCM {
         QQC2.CheckBox {
             id: batteryCheck
 
-            text: i18n("Battery")
+            text: i18n("Battery indicator in header")
         }
 
         QQC2.CheckBox {
