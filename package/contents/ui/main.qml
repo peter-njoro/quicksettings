@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import QtQuick
+import QtQuick.Layouts
 
 import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.plasmoid
@@ -37,10 +38,8 @@ PlasmoidItem {
         // Give Plasma one fixed popup size. Matching the minimum, preferred
         // and maximum constraints prevents the popup from resizing to fit
         // individual pages or changes in the enabled controls.
-        readonly property real fixedPopupWidth:
-            implicitWidth * PlasmaCore.Units.devicePixelRatio
-        readonly property real fixedPopupHeight:
-            implicitHeight * PlasmaCore.Units.devicePixelRatio
+        readonly property real fixedPopupWidth: implicitWidth
+        readonly property real fixedPopupHeight: implicitHeight
 
         Layout.minimumWidth: fixedPopupWidth
         Layout.preferredWidth: fixedPopupWidth
