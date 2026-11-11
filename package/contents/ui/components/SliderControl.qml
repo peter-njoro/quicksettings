@@ -22,6 +22,8 @@ ColumnLayout {
     property real to: 100
     property real value: 0
     property int stepSize: 1
+    // Number of slider steps applied per standard mouse-wheel notch.
+    property real wheelSpeedMultiplier: 3
     property bool interactive: true
     property bool showLabel: true
 
@@ -126,8 +128,11 @@ ColumnLayout {
                 }
 
                 // WheelHandler.rotation is measured in degrees; a standard
-                // wheel notch represents 15 degrees.
-                const increment = rotationDelta / 15 * Math.max(1, root.stepSize);
+                // wheel notch represents 15 degrees. Apply multiple slider
+                // steps per notch for a faster, more responsive adjustment.
+                const increment = rotationDelta / 15
+                    * Math.max(1, root.stepSize)
+                    * Math.max(1, root.wheelSpeedMultiplier);
                 const nextValue = Math.max(root.from,
                     Math.min(root.to, slider.value + increment));
 
