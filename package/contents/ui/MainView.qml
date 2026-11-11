@@ -27,7 +27,8 @@ Item {
     readonly property bool koiOnboarded: cfg.koiOnboarded === true
 
     implicitWidth: 390
-    implicitHeight: Kirigami.Units.gridUnit * 34
+    // Taller main popup lets the complete control layout remain visible without scrolling.
+    implicitHeight: Kirigami.Units.gridUnit * 36
 
     Component.onCompleted: koiControllerInstance.checkKoi()
 
