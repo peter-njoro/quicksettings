@@ -14,15 +14,17 @@ Item {
     property bool nightLightEnabled: false
     property bool stateAvailable: false
     property bool stateErrorReported: false
+    property var requestedNightLightEnabled: null
 
     readonly property string stateQuery: "qdbus6 org.kde.KWin "
         + "/org/kde/KWin/NightLight org.freedesktop.DBus.Properties.Get "
         + "org.kde.KWin.NightLight enabled"
+    readonly property string reconfigureCommand: "qdbus6 org.kde.KWin /KWin reconfigure"
 
     implicitWidth: circleButton.implicitWidth
     implicitHeight: circleButton.implicitHeight
     function setNightLightEnabled(enable) {
-        root.nightLightEnabled = enable;
+        root.requestedNightLightEnabled = enable;
         executable.connectSource("kwriteconfig6 --file kwinrc --group NightColor "
             + "--key Active " + (enable ? "true" : "false") + " --type bool --notify");
     }
@@ -62,6 +64,26 @@ Item {
 
         onNewData: function(sourceName, data) {
             executable.disconnectSource(sourceName);
+
+            const exitCode = data["exit code"];
+            if (exitCode === undefined || Number(exitCode) !== 0) {
+                console.warn("Night Light command failed:",
+                             data.stderr || data["exit status"] || sourceName);
+                root.requestedNightLightEnabled = null;
+                return;
+            }
+
+            if (sourceName === root.reconfigureCommand) {
+                if (root.requestedNightLightEnabled !== null) {
+                    root.nightLightEnabled = root.requestedNightLightEnabled;
+                }
+                root.requestedNightLightEnabled = null;
+                return;
+            }
+
+            if (root.requestedNightLightEnabled !== null) {
+                executable.connectSource(root.reconfigureCommand);
+            }
         }
     }
 
@@ -76,8 +98,9 @@ Item {
         statusText: root.stateAvailable
             ? (root.nightLightEnabled ? i18n("On") : i18n("Off")) : i18n("Unavailable")
         active: root.stateAvailable && root.nightLightEnabled
+        interactive: root.stateAvailable && root.requestedNightLightEnabled === null
         onActivated: {
-            if (!root.stateAvailable) {
+            if (!root.stateAvailable || root.requestedNightLightEnabled !== null) {
                 return;
             }
             root.setNightLightEnabled(!root.nightLightEnabled);
