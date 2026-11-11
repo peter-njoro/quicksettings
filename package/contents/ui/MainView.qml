@@ -176,19 +176,20 @@ Item {
                         }
 
                         RowLayout {
-                            Layout.fillWidth: true
+                            Layout.alignment: Qt.AlignHCenter
                             spacing: root.t.spacing
                             visible: root.cfg.showFocus !== false
                                 || root.cfg.showAppearance !== false
                                 || root.cfg.showNightLight !== false
 
-                            FocusCard {                                Layout.fillWidth: true
+                            FocusCard {
+                                Layout.alignment: Qt.AlignVCenter
                                 visible: root.cfg.showFocus !== false
                                 theme: root.t
                             }
 
                             AppearanceCard {
-                                Layout.fillWidth: true
+                                Layout.alignment: Qt.AlignVCenter
                                 visible: root.cfg.showAppearance !== false
                                 theme: root.t
                                 dark: root.systemDark
@@ -209,7 +210,7 @@ Item {
                             }
 
                             NightLightCard {
-                                Layout.fillWidth: true
+                                Layout.alignment: Qt.AlignVCenter
                                 visible: root.cfg.showNightLight !== false
                                 theme: root.t
                             }
