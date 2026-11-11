@@ -26,6 +26,9 @@ Item {
     readonly property bool koiConnected: koiControllerInstance.connected
     readonly property bool koiOnboarded: cfg.koiOnboarded === true
 
+    // Height of the main page's content, reported by the loaded main page.
+    property real mainContentHeight: 0
+
     implicitWidth: 390
     // Taller main popup lets the complete control layout remain visible without scrolling.
     implicitHeight: Kirigami.Units.gridUnit * 36
@@ -98,7 +101,16 @@ Item {
         id: mainPage
 
         Item {
+            Binding {
+                target: root
+                property: "mainContentHeight"
+                value: mainLayout.implicitHeight
+                restoreMode: Binding.RestoreNone
+            }
+
             ColumnLayout {
+                id: mainLayout
+
                 anchors.fill: parent
                 spacing: root.t.spacing
 
@@ -259,42 +271,6 @@ Item {
                         visible: root.cfg.showQuickActions !== false
                         theme: root.t
                         configuration: root.cfg
-                    }
-                }
-
-                PlasmaComponents3.Button {
-                    id: editControlsButton
-
-                    Layout.alignment: Qt.AlignHCenter
-                    text: i18n("Edit Controls")
-                    icon.name: "configure"
-                    onClicked: root.configureRequested()
-
-                    contentItem: RowLayout {
-                        spacing: Kirigami.Units.smallSpacing
-
-                        Kirigami.Icon {
-                            Layout.preferredWidth: Kirigami.Units.iconSizes.small
-                            Layout.preferredHeight: Layout.preferredWidth
-                            source: "configure"
-                            opacity: 0.55
-                        }
-
-                        PlasmaComponents3.Label {
-                            text: editControlsButton.text
-                            color: root.t.muted
-                            opacity: 0.62
-                            verticalAlignment: Text.AlignVCenter
-                        }
-                    }
-
-                    background: Rectangle {
-                        radius: height / 2
-                        color: editControlsButton.hovered
-                            ? root.t.alpha(root.t.text, 0.14)
-                            : root.t.alpha(root.t.text, 0.08)
-                        border.width: 1
-                        border.color: root.t.border
                     }
                 }
             }
