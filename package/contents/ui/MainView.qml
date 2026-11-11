@@ -3,7 +3,9 @@
 
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Window
 
+import org.kde.plasma.core as PlasmaCore
 import org.kde.plasma.components as PlasmaComponents3
 import org.kde.kirigami as Kirigami
 
@@ -22,6 +24,7 @@ Item {
 
     readonly property var cfg: configuration || plasmoid.configuration
     readonly property var t: theme || localTheme
+    readonly property var popupWindow: Window.window
     readonly property var koi: koiControllerInstance
     readonly property bool koiConnected: koiControllerInstance.connected
     readonly property bool koiOnboarded: cfg.koiOnboarded === true
@@ -34,7 +37,22 @@ Item {
         ? Math.ceil(mainContentHeight + 2 * t.padding)
         : Kirigami.Units.gridUnit * 32
 
-    Component.onCompleted: koiControllerInstance.checkKoi()
+    Component.onCompleted: {
+        koiControllerInstance.checkKoi();
+        root.updatePopupBackground();
+    }
+
+    onPopupWindowChanged: root.updatePopupBackground()
+
+    function updatePopupBackground() {
+        if (!root.popupWindow) {
+            return;
+        }
+
+        root.popupWindow.backgroundHints = root.t.blur
+            ? PlasmaCore.AppletPopup.StandardBackground
+            : PlasmaCore.AppletPopup.SolidBackground;
+    }
 
     function resetToMain() {
         currentPage = 0;
@@ -61,18 +79,14 @@ Item {
         anchors.fill: parent
         radius: root.t.popupRadius
         clip: true
-        gradient: Gradient {
-            GradientStop { position: 0.0; color: root.t.backgroundTop }
-            GradientStop { position: 1.0; color: root.t.background }
-        }
-        border.width: 1
-        border.color: root.t.border
+        color: root.t.background
     }
 
-    Components.GlassSheen {
-        anchors.fill: parent
-        theme: root.t
-        radius: root.t.popupRadius
+    Connections {
+        target: root.t
+        function onBlurChanged() {
+            root.updatePopupBackground();
+        }
     }
 
     Loader {

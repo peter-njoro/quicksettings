@@ -17,7 +17,7 @@ QtObject {
     property real transparency: 0.85
     property real radius: 24
 
-    readonly property real glassStrength: 0.55 + 0.45 * Math.max(0, Math.min(1, transparency))
+    readonly property real glassStrength: 1.0 - Math.max(0, Math.min(1, transparency))
 
     // Surface levels: main popup (24), cards (~20), interactive elements (~14).
     readonly property int popupRadius: Math.round(radius)
@@ -43,21 +43,18 @@ QtObject {
 
     readonly property color accent: followAccent ? Kirigami.Theme.highlightColor : "#0a84ff"
 
-    // Level 1: main popup. Slightly lighter at the top for depth.
-    readonly property color backgroundTop: dark
-        ? Qt.rgba(0.135, 0.135, 0.15, blur ? 0.78 * glassStrength : 1.0)
-        : Qt.rgba(0.965, 0.965, 0.978, blur ? 0.8 * glassStrength : 1.0)
+    // Level 1: main popup uses a single tint so its transparency is uniform.
     readonly property color background: dark
-        ? Qt.rgba(0.108, 0.108, 0.122, blur ? 0.78 * glassStrength : 1.0)
-        : Qt.rgba(0.945, 0.945, 0.96, blur ? 0.8 * glassStrength : 1.0)
+        ? Qt.rgba(0.108, 0.108, 0.122, glassStrength)
+        : Qt.rgba(0.945, 0.945, 0.96, glassStrength)
 
-    // Level 2: cards. A light veil over the blurred popup while blurred, solid otherwise.
+    // Level 2: card tints follow the same transparency setting as the popup.
     readonly property color card: dark
-        ? (blur ? Qt.rgba(1, 1, 1, 0.09 * glassStrength + 0.02) : Qt.rgba(0.19, 0.19, 0.21, 1.0))
-        : (blur ? Qt.rgba(1, 1, 1, 0.55 * glassStrength) : Qt.rgba(1, 1, 1, 1.0))
+        ? Qt.rgba(1, 1, 1, 0.02 + 0.09 * glassStrength)
+        : Qt.rgba(1, 1, 1, 0.55 * glassStrength)
     readonly property color cardHover: dark
-        ? (blur ? Qt.rgba(1, 1, 1, 0.14 * glassStrength + 0.02) : Qt.rgba(0.235, 0.235, 0.26, 1.0))
-        : (blur ? Qt.rgba(1, 1, 1, 0.75 * glassStrength) : Qt.rgba(1, 1, 1, 1.0))
+        ? Qt.rgba(1, 1, 1, 0.02 + 0.14 * glassStrength)
+        : Qt.rgba(1, 1, 1, 0.75 * glassStrength)
 
     readonly property color border: dark
         ? Qt.rgba(1, 1, 1, 0.14)

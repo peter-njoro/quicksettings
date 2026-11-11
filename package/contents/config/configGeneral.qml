@@ -113,7 +113,7 @@ KCM.SimpleKCM {
         QQC2.CheckBox {
             id: blurCheck
 
-            text: i18n("Use translucent glass cards (best with compositor blur)")
+            text: i18n("Use compositor blur behind the popup (requires compositor support)")
         }
 
         RowLayout {

@@ -20,8 +20,7 @@ PlasmoidItem {
 
     Plasmoid.title: i18n("Quick Settings")
     Plasmoid.icon: useCustomIcon && customIcon.length > 0 ? customIcon : defaultIcon
-    Plasmoid.backgroundHints: PlasmaCore.Types.DefaultBackground
-        | PlasmaCore.Types.ConfigurableBackground
+    Plasmoid.backgroundHints: PlasmaCore.Types.NoBackground
     hideOnWindowDeactivate: plasmoid.configuration.closeOnOutsideClick
 
     toolTipMainText: i18n("Quick Settings")
