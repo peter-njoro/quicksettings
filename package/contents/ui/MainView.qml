@@ -30,11 +30,8 @@ Item {
     property real mainContentHeight: 0
 
     implicitWidth: 390
-    // Fixed height that fits the main page exactly.
-    implicitHeight: mainContentHeight > 0
-        ? Math.ceil(mainContentHeight + 2 * t.padding)
-        : Kirigami.Units.gridUnit * 32
-    Layout.preferredHeight: implicitHeight
+    // Taller main popup lets the complete control layout remain visible without scrolling.
+    implicitHeight: Kirigami.Units.gridUnit * 36
 
     Component.onCompleted: koiControllerInstance.checkKoi()
 
@@ -115,164 +112,165 @@ Item {
                 id: mainLayout
 
                 anchors.fill: parent
-                spacing: root.t.sectionSpacing
+                spacing: root.t.spacing
 
                 Header {
                     Layout.fillWidth: true
                     theme: root.t
                     showDate: root.cfg.showHeaderDate !== false
+                    showBattery: root.cfg.showBattery !== false
                     onConfigureRequested: root.configureRequested()
+                    onPowerRequested: root.currentPage = 3
                 }
 
-                PlasmaComponents3.ScrollView {
-                    id: mainScroll
+                ColumnLayout {
+                    id: mainContent
 
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    Layout.preferredHeight: mainColumn.implicitHeight
-                    clip: true
-                    contentWidth: availableWidth
+                    spacing: root.t.spacing
 
-                    PlasmaComponents3.ScrollBar.horizontal.policy: PlasmaComponents3.ScrollBar.AlwaysOff
-                    background: null
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Layout.minimumWidth: 0
+                        Layout.minimumHeight: connectivityColumn.implicitHeight
+                        visible: connectivityColumn.visible
+                            || (root.cfg.showMedia !== false)
+                        spacing: root.t.spacing
 
-                    ColumnLayout {
-                        id: mainColumn
+                        ColumnLayout {
+                            id: connectivityColumn
 
-                        width: mainScroll.availableWidth
-                        spacing: root.t.sectionSpacing
+                            Layout.minimumWidth: 0
+                            Layout.preferredWidth: Math.max(0,
+                                (mainContent.width - root.t.spacing) * 0.46)
+                            spacing: root.t.spacing
+                            visible: wifiCard.visible || bluetoothCard.visible
 
-                        RowLayout {
+                            ConnectivityCard {
+                                id: wifiCard
+
+                                Layout.fillWidth: true
+                                Layout.minimumWidth: 0
+                                visible: root.cfg.showWifi !== false
+                                theme: root.t
+                                kind: "wifi"
+                                onActivated: root.currentPage = 1
+                            }
+
+                            ConnectivityCard {
+                                id: bluetoothCard
+
+                                Layout.fillWidth: true
+                                Layout.minimumWidth: 0
+                                visible: root.cfg.showBluetooth !== false
+                                theme: root.t
+                                kind: "bluetooth"
+                                onActivated: root.currentPage = 4
+                            }
+                        }
+
+                        MediaCard {
                             Layout.fillWidth: true
                             Layout.minimumWidth: 0
                             Layout.minimumHeight: connectivityColumn.implicitHeight
-                            visible: connectivityColumn.visible
-                                || (root.cfg.showMedia !== false)
-                            spacing: root.t.spacing
+                            Layout.preferredWidth: Math.max(0,
+                                (mainContent.width - root.t.spacing) * 0.54)
+                            Layout.preferredHeight: connectivityColumn.implicitHeight
+                            visible: root.cfg.showMedia !== false
+                            theme: root.t
+                        }
+                    }
 
-                            ColumnLayout {
-                                id: connectivityColumn
+                    RowLayout {
+                        Layout.fillWidth: true
+                        spacing: root.t.spacing
+                        visible: root.cfg.showCaffeine !== false
+                            || root.cfg.showFocus !== false
+                            || root.cfg.showAppearance !== false
+                            || root.cfg.showNightLight !== false
 
-                                Layout.minimumWidth: 0
-                                Layout.preferredWidth: Math.max(0,
-                                    (mainScroll.availableWidth - root.t.spacing) * 0.46)
-                                spacing: root.t.spacing
-                                visible: wifiCard.visible || bluetoothCard.visible
-
-                                ConnectivityCard {
-                                    id: wifiCard
-
-                                    Layout.fillWidth: true
-                                    Layout.minimumWidth: 0
-                                    visible: root.cfg.showWifi !== false
-                                    theme: root.t
-                                    kind: "wifi"
-                                    onActivated: root.currentPage = 1
-                                }
-
-                                ConnectivityCard {
-                                    id: bluetoothCard
-
-                                    Layout.fillWidth: true
-                                    Layout.minimumWidth: 0
-                                    visible: root.cfg.showBluetooth !== false
-                                    theme: root.t
-                                    kind: "bluetooth"
-                                    onActivated: root.currentPage = 4
-                                }
-                            }
-
-                            MediaCard {
-                                Layout.fillWidth: true
-                                Layout.minimumWidth: 0
-                                Layout.minimumHeight: connectivityColumn.implicitHeight
-                                Layout.preferredWidth: Math.max(0,
-                                    (mainScroll.availableWidth - root.t.spacing) * 0.54)
-                                Layout.preferredHeight: connectivityColumn.implicitHeight
-                                visible: root.cfg.showMedia !== false
-                                theme: root.t
-                            }
+                        CaffeineCard {
+                            Layout.preferredWidth: Math.max(0,
+                                (mainContent.width - root.t.spacing) * 0.46)
+                            Layout.alignment: Qt.AlignVCenter
+                            visible: root.cfg.showCaffeine !== false
+                            theme: root.t
                         }
 
-                        RowLayout {
+                        Item {
                             Layout.fillWidth: true
-                            spacing: root.t.spacing
-                            visible: root.cfg.showFocus !== false
-                                || root.cfg.showAppearance !== false
-                                || root.cfg.showNightLight !== false
+                            Layout.preferredHeight: circleRow.implicitHeight
+                            Layout.alignment: Qt.AlignVCenter
 
-                            FocusCard {                                Layout.fillWidth: true
-                                visible: root.cfg.showFocus !== false
-                                theme: root.t
-                            }
+                            RowLayout {
+                                id: circleRow
 
-                            AppearanceCard {
-                                Layout.fillWidth: true
-                                visible: root.cfg.showAppearance !== false
-                                theme: root.t
-                                dark: root.systemDark
-                                koiConnected: root.koiConnected
-                                koiOnboarded: root.koiOnboarded
-                                animationsEnabled: root.t.animations
-                                onActivated: {
-                                    if (root.koiConnected && root.koiOnboarded) {
-                                        if (root.systemDark) {
-                                            root.koi.applyLightMode();
+                                anchors.centerIn: parent
+                                spacing: root.t.spacing
+
+                                FocusCard {
+                                    visible: root.cfg.showFocus !== false
+                                    theme: root.t
+                                }
+
+                                AppearanceCard {
+                                    visible: root.cfg.showAppearance !== false
+                                    theme: root.t
+                                    dark: root.systemDark
+                                    koiConnected: root.koiConnected
+                                    koiOnboarded: root.koiOnboarded
+                                    animationsEnabled: root.t.animations
+                                    onActivated: {
+                                        if (root.koiConnected && root.koiOnboarded) {
+                                            if (root.systemDark) {
+                                                root.koi.applyLightMode();
+                                            } else {
+                                                root.koi.applyDarkMode();
+                                            }
                                         } else {
-                                            root.koi.applyDarkMode();
+                                            root.currentPage = 5;
                                         }
-                                    } else {
-                                        root.currentPage = 5;
                                     }
                                 }
+
+                                NightLightCard {
+                                    visible: root.cfg.showNightLight !== false
+                                    theme: root.t
+                                }
+                            }
+                        }
+                    }
+
+                    Components.GlassCard {
+                        Layout.fillWidth: true
+                        visible: (root.cfg.showBrightness !== false && brightnessControl.available)
+                            || (root.cfg.showVolume !== false && volumeControl.available)
+                        theme: root.t
+
+                        ColumnLayout {
+                            Layout.fillWidth: true
+                            spacing: root.t.spacing
+
+                            BrightnessControl {
+                                id: brightnessControl
+                                Layout.fillWidth: true
+                                theme: root.t
                             }
 
-                            NightLightCard {
+                            VolumeControl {
+                                id: volumeControl
                                 Layout.fillWidth: true
-                                visible: root.cfg.showNightLight !== false
                                 theme: root.t
                             }
                         }
+                    }
 
-                        Components.GlassCard {
-                            Layout.fillWidth: true
-                            visible: (root.cfg.showBrightness !== false && brightnessControl.available)
-                                || (root.cfg.showVolume !== false && volumeControl.available)
-                            theme: root.t
-
-                            ColumnLayout {
-                                Layout.fillWidth: true
-                                spacing: root.t.spacing
-
-                                BrightnessControl {
-                                    id: brightnessControl
-                                    Layout.fillWidth: true
-                                    theme: root.t
-                                }
-
-                                VolumeControl {
-                                    id: volumeControl
-                                    Layout.fillWidth: true
-                                    theme: root.t
-                                }
-                            }
-                        }
-
-                        BatteryCard {
-                            id: batteryCard
-
-                            Layout.fillWidth: true
-                            visible: root.cfg.showBattery !== false && batteryCard.present
-                            theme: root.t
-                            onActivated: root.currentPage = 3
-                        }
-
-                        QuickActions {
-                            Layout.fillWidth: true
-                            visible: root.cfg.showQuickActions !== false
-                            theme: root.t
-                            configuration: root.cfg
-                        }
+                    QuickActions {
+                        Layout.fillWidth: true
+                        visible: root.cfg.showQuickActions !== false
+                        theme: root.t
+                        configuration: root.cfg
                     }
                 }
             }

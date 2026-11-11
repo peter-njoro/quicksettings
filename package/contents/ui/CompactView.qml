@@ -70,8 +70,4 @@ Item {
         acceptedButtons: Qt.LeftButton
         onTapped: root.activated()
     }
-
-    QQC2.ToolTip.text: i18n("Quick Settings")
-    QQC2.ToolTip.visible: root.hovered
-    QQC2.ToolTip.delay: 500
 }
