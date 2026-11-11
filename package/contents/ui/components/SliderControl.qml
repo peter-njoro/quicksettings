@@ -22,6 +22,8 @@ ColumnLayout {
     property real to: 100
     property real value: 0
     property int stepSize: 1
+    // Number of slider steps applied per standard mouse-wheel notch.
+    property real wheelSpeedMultiplier: 3
     property bool interactive: true
     property bool showLabel: true
 
@@ -69,6 +71,8 @@ ColumnLayout {
     QQC2.Slider {
         id: slider
 
+        property bool wheelAdjusting: false
+
         Layout.fillWidth: true
         implicitHeight: 34
         leftPadding: 4
@@ -84,11 +88,66 @@ ColumnLayout {
 
         Binding on value {
             value: root.value
-            when: !slider.pressed
+            when: !slider.pressed && !slider.wheelAdjusting
             restoreMode: Binding.RestoreNone
         }
 
         onMoved: root.moved(value)
+
+        // Keep the local thumb responsive while the brightness or audio
+        // backend publishes the updated value.
+        Timer {
+            id: wheelAdjustReset
+
+            interval: 300
+            repeat: false
+            onTriggered: slider.wheelAdjusting = false
+        }
+
+        // Adjust the slider while the pointer is over it. Using WheelHandler's
+        // rotation keeps the direction consistent with the system's scrolling
+        // preference and supports both mouse wheels and touchpads.
+        WheelHandler {
+            id: wheelHandler
+
+            target: null
+            orientation: Qt.Vertical
+            acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
+            invertible: true
+            enabled: root.interactive && !slider.pressed && root.to > root.from
+
+            property real previousRotation: 0
+
+            onWheel: function(event) {
+                const rotationDelta = wheelHandler.rotation - wheelHandler.previousRotation;
+                wheelHandler.previousRotation = wheelHandler.rotation;
+
+                if (rotationDelta === 0) {
+                    event.accepted = true;
+                    return;
+                }
+
+                // WheelHandler.rotation is measured in degrees; a standard
+                // wheel notch represents 15 degrees. Apply multiple slider
+                // steps per notch for a faster, more responsive adjustment.
+                const increment = rotationDelta / 15
+                    * Math.max(1, root.stepSize)
+                    * Math.max(1, root.wheelSpeedMultiplier);
+                const nextValue = Math.max(root.from,
+                    Math.min(root.to, slider.value + increment));
+
+                if (Math.abs(nextValue - slider.value) > 0.000001) {
+                    slider.wheelAdjusting = true;
+                    slider.value = nextValue;
+                    root.moved(nextValue);
+                    wheelAdjustReset.restart();
+                }
+
+                // A wheel event over the slider adjusts the value instead of
+                // scrolling the containing popup.
+                event.accepted = true;
+            }
+        }
 
         background: Rectangle {
             x: slider.leftPadding
