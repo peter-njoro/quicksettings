@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
   <title>Bluetooth</title>
-  <g stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M30 7.5L46 21.5L32 32L46 42.5L30 56.5V7.5Z"/>
-    <path d="M17.5 20L46 42.5"/>
-    <path d="M17.5 44L46 21.5"/>
+  <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path fill="none" d="M30 7.5L46 21.5L32 32L46 42.5L30 56.5V7.5Z"/>
+    <path fill="none" d="M17.5 20L46 42.5"/>
+    <path fill="none" d="M17.5 44L46 21.5"/>
   </g>
 </svg>

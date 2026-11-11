@@ -19,6 +19,7 @@ Components.GlassCard {
         Layout.fillWidth: true
         Layout.alignment: Qt.AlignHCenter
         text: i18n("Now Playing")
+        horizontalAlignment: Text.AlignHCenter
         color: root.t.muted
         font.pointSize: Kirigami.Theme.smallFont.pointSize
         font.weight: Font.DemiBold
