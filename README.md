@@ -150,6 +150,17 @@ turning Night Light on or off).
   it exposes the MPRIS D-Bus interface.
 - **QML errors while developing:** run `./scripts/lint.sh` and check the
   Plasma session log (`journalctl --user -b -u plasma-plasmashell`).
+- **"Ubuntu has experienced an internal error" after toggling Appearance:**
+  this is a known KDE bug in KRunner's Web Shortcuts runner that can be
+  triggered by any Plasma theme switch, including the one the Appearance card
+  requests from Koi. See
+  [docs/krunner-crash-theme-switch.md](docs/krunner-crash-theme-switch.md) for
+  diagnosis and workarounds.
+
+## Documentation notes
+
+Development notes and known-issue write-ups live in [docs/](docs/README.md),
+including the KRunner theme-switch crash described above.
 
 ## Screenshots
 
