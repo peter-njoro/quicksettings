@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Caffeine card that keeps the screen on and prevents idle sleep, placed below
+  Bluetooth with the Focus, Appearance and Night Light buttons beside it.
 - Microphone volume and mute controls in the audio details view.
 - Open the audio details view by clicking the volume card.
 - Open the power details view by clicking the battery card.

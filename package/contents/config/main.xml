@@ -63,6 +63,9 @@ SPDX-License-Identifier: GPL-3.0-or-later
         <entry name="showBluetooth" type="Bool">
             <default>true</default>
         </entry>
+        <entry name="showCaffeine" type="Bool">
+            <default>true</default>
+        </entry>
         <entry name="showBrightness" type="Bool">
             <default>true</default>
         </entry>

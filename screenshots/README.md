@@ -9,7 +9,8 @@ Screenshots are generated from the real QML sources; no mockups are used.
 5. `audio.png` — the expanded audio view (420 × 760).
 6. `power.png` — the expanded power view (420 × 340).
 
-All six images were rendered from the same QML sources with an offscreen
-Qt Quick harness; the live widget was also verified in `plasmawindowed` under
-XWayland. Keep the accent colour and desktop wallpaper consistent when
+All six images come from the same QML sources: the main pair was captured
+from the live widget in `plasmawindowed`, and the detail views were rendered
+with an offscreen Qt Quick harness. Keep the icon theme, accent colour and
+background consistent with the Breeze Light/Dark colour schemes when
 refreshing the set.

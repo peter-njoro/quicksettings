@@ -12,6 +12,7 @@ KCM.SimpleKCM {
 
     property alias cfg_showWifi: wifiCheck.checked
     property alias cfg_showBluetooth: bluetoothCheck.checked
+    property alias cfg_showCaffeine: caffeineCheck.checked
     property alias cfg_showBrightness: brightnessCheck.checked
     property alias cfg_showVolume: volumeCheck.checked
     property alias cfg_showFocus: focusCheck.checked
@@ -32,6 +33,12 @@ KCM.SimpleKCM {
             id: bluetoothCheck
 
             text: i18n("Bluetooth")
+        }
+
+        QQC2.CheckBox {
+            id: caffeineCheck
+
+            text: i18n("Caffeine (keep the screen on)")
         }
 
         QQC2.CheckBox {

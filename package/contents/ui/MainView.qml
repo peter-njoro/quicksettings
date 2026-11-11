@@ -176,43 +176,62 @@ Item {
                         }
 
                         RowLayout {
-                            Layout.alignment: Qt.AlignHCenter
+                            Layout.fillWidth: true
                             spacing: root.t.spacing
-                            visible: root.cfg.showFocus !== false
+                            visible: root.cfg.showCaffeine !== false
+                                || root.cfg.showFocus !== false
                                 || root.cfg.showAppearance !== false
                                 || root.cfg.showNightLight !== false
 
-                            FocusCard {
+                            CaffeineCard {
+                                Layout.preferredWidth: Math.max(0,
+                                    (mainScroll.availableWidth - root.t.spacing) * 0.46)
                                 Layout.alignment: Qt.AlignVCenter
-                                visible: root.cfg.showFocus !== false
+                                visible: root.cfg.showCaffeine !== false
                                 theme: root.t
                             }
 
-                            AppearanceCard {
+                            Item {
+                                Layout.fillWidth: true
+                                Layout.preferredHeight: circleRow.implicitHeight
                                 Layout.alignment: Qt.AlignVCenter
-                                visible: root.cfg.showAppearance !== false
-                                theme: root.t
-                                dark: root.systemDark
-                                koiConnected: root.koiConnected
-                                koiOnboarded: root.koiOnboarded
-                                animationsEnabled: root.t.animations
-                                onActivated: {
-                                    if (root.koiConnected && root.koiOnboarded) {
-                                        if (root.systemDark) {
-                                            root.koi.applyLightMode();
-                                        } else {
-                                            root.koi.applyDarkMode();
+
+                                RowLayout {
+                                    id: circleRow
+
+                                    anchors.centerIn: parent
+                                    spacing: root.t.spacing
+
+                                    FocusCard {
+                                        visible: root.cfg.showFocus !== false
+                                        theme: root.t
+                                    }
+
+                                    AppearanceCard {
+                                        visible: root.cfg.showAppearance !== false
+                                        theme: root.t
+                                        dark: root.systemDark
+                                        koiConnected: root.koiConnected
+                                        koiOnboarded: root.koiOnboarded
+                                        animationsEnabled: root.t.animations
+                                        onActivated: {
+                                            if (root.koiConnected && root.koiOnboarded) {
+                                                if (root.systemDark) {
+                                                    root.koi.applyLightMode();
+                                                } else {
+                                                    root.koi.applyDarkMode();
+                                                }
+                                            } else {
+                                                root.currentPage = 5;
+                                            }
                                         }
-                                    } else {
-                                        root.currentPage = 5;
+                                    }
+
+                                    NightLightCard {
+                                        visible: root.cfg.showNightLight !== false
+                                        theme: root.t
                                     }
                                 }
-                            }
-
-                            NightLightCard {
-                                Layout.alignment: Qt.AlignVCenter
-                                visible: root.cfg.showNightLight !== false
-                                theme: root.t
                             }
                         }
 

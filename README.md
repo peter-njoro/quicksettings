@@ -18,6 +18,7 @@ for the full set and capture notes.
 - Appearance and Night Light quick toggles that stay in sync with the system.
 - Live system state for Wi-Fi, Bluetooth, volume, screen brightness, media,
   notifications and battery.
+- Caffeine toggle that keeps the screen on and prevents idle sleep.
 - Separate Wi-Fi, Bluetooth, audio and power detail views inside the same popup.
 - Per-module visibility, spacing, transparency, corner radius, animation and
   quick-action configuration.
@@ -33,6 +34,7 @@ for the full set and capture notes.
   - PipeWire or PulseAudio through `plasma-pa`.
   - MPRIS for media players.
   - UPower / PowerDevil for battery and power profiles.
+  - `systemd-run` and `systemd-inhibit` for the Caffeine toggle.
 - `plasma-apply-colorscheme` from `plasma-workspace` for light/dark switching.
 
 All integrations are optional at runtime. Missing hardware or services result
@@ -96,8 +98,8 @@ Available settings include:
 - Optional custom panel icon with an icon picker and reset to the bundled default.
 - Transparency, glass effect, corner radius, compact spacing, animations and
   animation speed.
-- Visibility of each module (Wi-Fi, Bluetooth, brightness, volume, focus,
-  appearance, Night Light, media, battery and quick actions).
+- Visibility of each module (Wi-Fi, Bluetooth, Caffeine, brightness, volume,
+  focus, appearance, Night Light, media, battery and quick actions).
 - Header date visibility, close-on-outside-click and whether the popup
   remembers the last view.
 - Individual quick actions for System Settings, lock screen, display, power,
