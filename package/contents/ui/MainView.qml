@@ -26,8 +26,15 @@ Item {
     readonly property bool koiConnected: koiControllerInstance.connected
     readonly property bool koiOnboarded: cfg.koiOnboarded === true
 
+    // Height of the main page's content, reported by the loaded main page.
+    property real mainContentHeight: 0
+
     implicitWidth: 390
-    implicitHeight: Kirigami.Units.gridUnit * 32
+    // Fixed height that fits the main page exactly.
+    implicitHeight: mainContentHeight > 0
+        ? Math.ceil(mainContentHeight + 2 * t.padding)
+        : Kirigami.Units.gridUnit * 32
+    Layout.preferredHeight: implicitHeight
 
     Component.onCompleted: koiControllerInstance.checkKoi()
 
@@ -97,7 +104,16 @@ Item {
         id: mainPage
 
         Item {
+            Binding {
+                target: root
+                property: "mainContentHeight"
+                value: mainLayout.implicitHeight
+                restoreMode: Binding.RestoreNone
+            }
+
             ColumnLayout {
+                id: mainLayout
+
                 anchors.fill: parent
                 spacing: root.t.sectionSpacing
 
@@ -113,6 +129,7 @@ Item {
 
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+                    Layout.preferredHeight: mainColumn.implicitHeight
                     clip: true
                     contentWidth: availableWidth
 
@@ -120,6 +137,8 @@ Item {
                     background: null
 
                     ColumnLayout {
+                        id: mainColumn
+
                         width: mainScroll.availableWidth
                         spacing: root.t.sectionSpacing
 
@@ -254,42 +273,6 @@ Item {
                             theme: root.t
                             configuration: root.cfg
                         }
-                    }
-                }
-
-                PlasmaComponents3.Button {
-                    id: editControlsButton
-
-                    Layout.alignment: Qt.AlignHCenter
-                    text: i18n("Edit Controls")
-                    icon.name: "configure"
-                    onClicked: root.configureRequested()
-
-                    contentItem: RowLayout {
-                        spacing: Kirigami.Units.smallSpacing
-
-                        Kirigami.Icon {
-                            Layout.preferredWidth: Kirigami.Units.iconSizes.small
-                            Layout.preferredHeight: Layout.preferredWidth
-                            source: "configure"
-                            opacity: 0.55
-                        }
-
-                        PlasmaComponents3.Label {
-                            text: editControlsButton.text
-                            color: root.t.muted
-                            opacity: 0.62
-                            verticalAlignment: Text.AlignVCenter
-                        }
-                    }
-
-                    background: Rectangle {
-                        radius: height / 2
-                        color: editControlsButton.hovered
-                            ? root.t.alpha(root.t.text, 0.14)
-                            : root.t.alpha(root.t.text, 0.08)
-                        border.width: 1
-                        border.color: root.t.border
                     }
                 }
             }
