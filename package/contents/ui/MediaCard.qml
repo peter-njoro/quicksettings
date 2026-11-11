@@ -17,6 +17,7 @@ Components.GlassCard {
 
     PlasmaComponents3.Label {
         Layout.fillWidth: true
+        Layout.alignment: Qt.AlignHCenter
         text: i18n("Now Playing")
         color: root.t.muted
         font.pointSize: Kirigami.Theme.smallFont.pointSize
