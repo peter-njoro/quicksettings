@@ -83,11 +83,23 @@ Item {
             visible: root.showBattery && root.batteryPresent
             Layout.preferredWidth: 32
             Layout.preferredHeight: 32
-            icon.name: root.batteryCharging ? "battery-charging" : "battery"
-            icon.color: root.batteryCharging ? root.t.accent : root.t.text
             text: root.batteryTooltip
             display: PlasmaComponents3.ToolButton.IconOnly
             onClicked: root.powerRequested()
+
+            contentItem: Item {
+                implicitWidth: Kirigami.Units.iconSizes.smallMedium
+                implicitHeight: Kirigami.Units.iconSizes.smallMedium
+
+                Components.BatteryIcon {
+                    anchors.centerIn: parent
+                    width: Kirigami.Units.iconSizes.smallMedium
+                    height: width
+                    theme: root.t
+                    percent: battery.percent
+                    charging: root.batteryCharging
+                }
+            }
 
             QQC2.ToolTip.visible: hovered
             QQC2.ToolTip.text: root.batteryTooltip

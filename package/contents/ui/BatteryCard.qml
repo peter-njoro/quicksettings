@@ -31,38 +31,12 @@ Components.GlassCard {
         Layout.fillWidth: true
         spacing: Kirigami.Units.smallSpacing
 
-        Item {
+        Components.BatteryIcon {
             Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium
             Layout.preferredHeight: Layout.preferredWidth
-
-            Rectangle {
-                anchors.fill: parent
-                radius: 3
-                color: "transparent"
-                border.width: 2
-                border.color: root.t.text
-                opacity: 0.8
-
-                Rectangle {
-                    x: 2
-                    y: 2
-                    width: Math.max(0, (parent.width - 6) * Math.max(0, Math.min(100, root.percent)) / 100)
-                    height: parent.height - 4
-                    radius: 1
-                    color: root.charging ? root.t.accent : root.t.text
-                    opacity: 0.85
-                }
-
-                Rectangle {
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 2
-                    height: parent.height * 0.45
-                    radius: 1
-                    color: root.t.text
-                    opacity: 0.8
-                }
-            }
+            theme: root.t
+            percent: root.percent
+            charging: root.charging
         }
 
         ColumnLayout {

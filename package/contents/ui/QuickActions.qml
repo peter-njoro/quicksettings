@@ -5,6 +5,7 @@ import QtQuick
 import QtQuick.Layouts
 
 import org.kde.kcmutils as KCMUtils
+import org.kde.plasma.private.battery
 import org.kde.plasma.private.sessions as Sessions
 import org.kde.kirigami as Kirigami
 
@@ -48,6 +49,8 @@ Item {
         if (!root.configuration || root.configuration.quickActionPower) {
             list.push({
                 iconName: "preferences-system-power-management",
+                iconComponent: battery.hasBatteries || battery.hasCumulative
+                    ? powerIconComponent : null,
                 tooltip: i18n("Power settings"),
                 action: function() {
                     KCMUtils.KCMLauncher.openSystemSettings("kcm_powerdevilprofilesconfig");
@@ -88,6 +91,20 @@ Item {
         id: sessionManagement
     }
 
+    BatteryControlModel {
+        id: battery
+    }
+
+    Component {
+        id: powerIconComponent
+
+        Components.BatteryIcon {
+            theme: root.theme
+            percent: battery.percent
+            charging: battery.state === BatteryControlModel.Charging
+        }
+    }
+
     implicitWidth: row.implicitWidth
     implicitHeight: 32
 
@@ -106,9 +123,11 @@ Item {
 
                 theme: root.theme
                 iconName: modelData.iconName
+                iconComponent: modelData.iconComponent || null
                 tooltip: modelData.tooltip
                 iconSize: Kirigami.Units.iconSizes.small
                 onClicked: modelData.action()
-            }        }
+            }
+        }
     }
 }

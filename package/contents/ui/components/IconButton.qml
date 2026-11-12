@@ -13,6 +13,7 @@ Item {
 
     property var theme: null
     property string iconName: ""
+    property Component iconComponent: null
     property string tooltip: ""
     property bool interactive: true
     property bool checked: false
@@ -44,11 +45,21 @@ Item {
         }
     }
 
+    Loader {
+        anchors.centerIn: parent
+        width: root.iconSize
+        height: root.iconSize
+        visible: root.iconComponent !== null
+        opacity: root.interactive ? 1.0 : 0.7
+        sourceComponent: root.iconComponent
+    }
+
     Kirigami.Icon {
         anchors.centerIn: parent
         width: root.iconSize
         height: root.iconSize
         source: root.iconName
+        visible: root.iconComponent === null
         opacity: root.interactive ? 1.0 : 0.7
     }
 

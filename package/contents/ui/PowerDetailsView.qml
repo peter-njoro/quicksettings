@@ -134,11 +134,12 @@ Item {
                                 textFormat: Text.PlainText
                             }
 
-                            Kirigami.Icon {
-                                Layout.preferredWidth: Kirigami.Units.iconSizes.medium
+                            Components.BatteryIcon {
+                                Layout.preferredWidth: Kirigami.Units.iconSizes.large
                                 Layout.preferredHeight: Layout.preferredWidth
-                                source: battery.state === BatteryControlModel.Charging
-                                    ? "battery-charging" : "battery"
+                                theme: root.t
+                                percent: battery.percent
+                                charging: battery.state === BatteryControlModel.Charging
                             }
                         }
 
