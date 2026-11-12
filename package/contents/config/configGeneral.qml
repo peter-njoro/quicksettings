@@ -28,7 +28,10 @@ KCM.SimpleKCM {
 
     readonly property bool customIconActive: useCustomIconCheck.checked
         && cfg_icon.length > 0
-    readonly property url defaultIcon: Qt.resolvedUrl("../icons/quick-settings.svg")
+    readonly property bool systemDark: Kirigami.Theme.backgroundColor.hslLightness < 0.5
+    readonly property url defaultIcon: Qt.resolvedUrl(page.systemDark
+        ? "../icons/quick-settings-light.svg"
+        : "../icons/quick-settings-dark.svg")
 
     KIconThemes.IconDialog {
         id: iconDialog
@@ -64,8 +67,6 @@ KCM.SimpleKCM {
                 Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium
                 Layout.preferredHeight: Kirigami.Units.iconSizes.smallMedium
                 source: page.customIconActive ? page.cfg_icon : page.defaultIcon
-                isMask: !page.customIconActive
-                color: Kirigami.Theme.textColor
             }
 
             QQC2.CheckBox {

@@ -16,7 +16,10 @@ Item {
     property bool popupOpen: false
 
     readonly property bool showCustomIcon: useCustomIcon && iconName.length > 0
-    readonly property url defaultIcon: Qt.resolvedUrl("../icons/quick-settings.svg")
+    readonly property bool systemDark: Kirigami.Theme.backgroundColor.hslLightness < 0.5
+    readonly property url defaultIcon: Qt.resolvedUrl(root.systemDark
+        ? "../icons/quick-settings-light.svg"
+        : "../icons/quick-settings-dark.svg")
 
     implicitWidth: Kirigami.Units.iconSizes.smallMedium
         + Kirigami.Units.smallSpacing * 2
@@ -55,8 +58,6 @@ Item {
             width: Kirigami.Units.iconSizes.small
             height: width
             source: root.showCustomIcon ? root.iconName : root.defaultIcon
-            isMask: !root.showCustomIcon
-            color: Kirigami.Theme.textColor
         }
     }
 

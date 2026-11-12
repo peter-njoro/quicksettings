@@ -81,23 +81,26 @@ Item {
             id: batteryButton
 
             visible: root.showBattery && root.batteryPresent
-            Layout.preferredWidth: 32
-            Layout.preferredHeight: 32
             text: root.batteryTooltip
             display: PlasmaComponents3.ToolButton.IconOnly
             onClicked: root.powerRequested()
 
-            contentItem: Item {
-                implicitWidth: Kirigami.Units.iconSizes.smallMedium
-                implicitHeight: Kirigami.Units.iconSizes.smallMedium
+            contentItem: RowLayout {
+                spacing: Kirigami.Units.smallSpacing
 
                 Components.BatteryIcon {
-                    anchors.centerIn: parent
-                    width: Kirigami.Units.iconSizes.smallMedium
-                    height: width
+                    Layout.preferredWidth: Kirigami.Units.iconSizes.smallMedium
+                    Layout.preferredHeight: Layout.preferredWidth
                     theme: root.t
                     percent: battery.percent
                     charging: root.batteryCharging
+                }
+
+                PlasmaComponents3.Label {
+                    text: battery.percent + "%"
+                    color: root.t.text
+                    font.pointSize: Kirigami.Theme.smallFont.pointSize
+                    textFormat: Text.PlainText
                 }
             }
 

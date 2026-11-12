@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 24 24"
+     width="24" height="24"
+     fill="none"
+     role="img"
+     aria-labelledby="title">
+  <title id="title">Quick Settings</title>
+
+  <defs>
+    <linearGradient id="glass" x1="0" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#1D1D1F" stop-opacity=".13"/>
+      <stop offset="1" stop-color="#1D1D1F" stop-opacity=".045"/>
+    </linearGradient>
+
+    <linearGradient id="glassHighlight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1D1D1F" stop-opacity=".16"/>
+      <stop offset=".48" stop-color="#1D1D1F" stop-opacity=".035"/>
+      <stop offset="1" stop-color="#1D1D1F" stop-opacity=".01"/>
+    </linearGradient>
+
+    <filter id="softShadow" x="-20%" y="-35%" width="140%" height="180%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation=".35" result="blur"/>
+      <feOffset dy=".35" result="offset"/>
+      <feComponentTransfer in="offset" result="shadow">
+        <feFuncA type="linear" slope=".18"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <g filter="url(#softShadow)">
+    <!-- Upper glass control -->
+    <rect x="2.65" y="4.25" width="18.7" height="6.15" rx="3.075"
+          fill="url(#glass)"
+          stroke="#1D1D1F" stroke-opacity=".48" stroke-width=".8"/>
+    <rect x="3.05" y="4.65" width="17.9" height="5.35" rx="2.675"
+          fill="url(#glassHighlight)"/>
+    <path d="M5.1 4.8h13.8c1.15 0 2.05.55 2.5 1.45"
+          stroke="#1D1D1F" stroke-opacity=".24"
+          stroke-width=".55" stroke-linecap="round"/>
+    <circle cx="8.05" cy="7.325" r="1.72"
+            fill="#1D1D1F" fill-opacity=".88"/>
+    <circle cx="7.55" cy="6.8" r=".52"
+            fill="#1D1D1F" fill-opacity=".16"/>
+
+    <!-- Lower glass control -->
+    <rect x="2.65" y="13.6" width="18.7" height="6.15" rx="3.075"
+          fill="url(#glass)"
+          stroke="#1D1D1F" stroke-opacity=".48" stroke-width=".8"/>
+    <rect x="3.05" y="14" width="17.9" height="5.35" rx="2.675"
+          fill="url(#glassHighlight)"/>
+    <path d="M5.1 14.15h13.8c1.15 0 2.05.55 2.5 1.45"
+          stroke="#1D1D1F" stroke-opacity=".24"
+          stroke-width=".55" stroke-linecap="round"/>
+    <circle cx="15.95" cy="16.675" r="1.72"
+            fill="#1D1D1F" fill-opacity=".88"/>
+    <circle cx="15.45" cy="16.15" r=".52"
+            fill="#1D1D1F" fill-opacity=".16"/>
+  </g>
+</svg>
