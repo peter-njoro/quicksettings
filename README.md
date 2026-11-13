@@ -28,6 +28,11 @@ for the full set and capture notes.
 
 - KDE Plasma 6.0 or newer (developed against Plasma 6.6).
 - Qt 6 and the Plasma QML components (`plasma-workspace`, `libplasma`).
+- Koi (`dev.baduhai.Koi`) for Appearance switching and the Appearance card.
+  The card delegates theme changes to Koi over D-Bus; without Koi installed or
+  connected, the card shows a setup flow instead of changing the theme. See
+  [docs/README.md](docs/README.md) and [docs/appearance-koi.md](docs/appearance-koi.md)
+  for more context.
 - The standard Plasma integration modules used by the desktop:
   - NetworkManager and `plasma-nm` for Wi-Fi.
   - BlueZ and `bluez-qt` for Bluetooth.
