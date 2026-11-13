@@ -6,6 +6,7 @@ import QtQuick.Layouts
 
 import org.kde.plasma.components as PlasmaComponents3
 import org.kde.bluezqt as BluezQt
+import org.kde.kcmutils as KCMUtils
 import org.kde.kirigami as Kirigami
 
 import "components" as Components
@@ -58,6 +59,14 @@ Item {
                 font.weight: Font.DemiBold
                 font.pointSize: Kirigami.Theme.defaultFont.pointSize + 2
                 textFormat: Text.PlainText
+            }
+
+            Components.ActionButton {
+                Layout.alignment: Qt.AlignVCenter
+                theme: root.t
+                text: i18n("Settings")
+                icon.name: "settings-configure"
+                onClicked: KCMUtils.KCMLauncher.openSystemSettings("kcm_bluetooth")
             }
         }
 

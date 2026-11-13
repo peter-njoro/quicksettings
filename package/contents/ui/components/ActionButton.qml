@@ -27,6 +27,11 @@ PlasmaComponents3.Button {
 
     implicitHeight: root.primary ? 40 : 36
 
+    leftPadding: root.t.spacingM
+    rightPadding: root.t.spacingM
+    topPadding: root.t.spacingS
+    bottomPadding: root.t.spacingS
+
     opacity: enabled ? 1.0 : 0.5
 
     icon.color: "transparent"
