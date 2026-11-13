@@ -142,6 +142,7 @@ Item {
 
                             Components.ActionButton {
                                 Layout.alignment: Qt.AlignVCenter
+                                theme: root.t
                                 primary: !device.connected
                                 text: device.connected ? i18n("Disconnect") : i18n("Connect")
                                 enabled: root.btAdapter && root.btAdapter.powered

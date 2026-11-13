@@ -137,6 +137,7 @@ Item {
 
                             Components.ActionButton {
                                 Layout.fillWidth: true
+                                theme: root.t
                                 primary: true
                                 text: root.missingKoi ? i18n("Get Koi") : i18n("Open Koi")
                                 icon.name: root.missingKoi ? "install-hdd" : "application-x-kde-sysinfo"
@@ -151,6 +152,7 @@ Item {
 
                             Components.ActionButton {
                                 Layout.fillWidth: true
+                                theme: root.t
                                 visible: root.missingKoi || root.needsLaunch
                                 text: root.missingKoi ? i18n("I've installed Koi") : i18n("Recheck connection")
                                 onClicked: koi.checkKoi()
@@ -158,6 +160,7 @@ Item {
 
                             Components.ActionButton {
                                 Layout.fillWidth: true
+                                theme: root.t
                                 visible: root.needsProfiles
                                 text: i18n("Continue")
                                 onClicked: root.koiOnboarded()

@@ -156,6 +156,36 @@ Item {
                                 font.pointSize: Kirigami.Theme.smallFont.pointSize
                                 textFormat: Text.PlainText
                             }
+
+                            Components.ActionButton {
+                                Layout.alignment: Qt.AlignVCenter
+                                theme: root.t
+                                primary: model.ConnectionState !== PlasmaNM.Enums.Activated
+                                text: {
+                                    if (model.ConnectionState === PlasmaNM.Enums.Activated) {
+                                        return i18n("Disconnect");
+                                    }
+                                    if (model.ConnectionState === PlasmaNM.Enums.Activating) {
+                                        return i18n("Connecting…");
+                                    }
+                                    if (model.ConnectionState === PlasmaNM.Enums.Deactivating) {
+                                        return i18n("Disconnecting…");
+                                    }
+                                    return i18n("Connect");
+                                }
+                                enabled: enabledConnections.wirelessEnabled
+                                    && model.ConnectionState !== PlasmaNM.Enums.Activating
+                                    && model.ConnectionState !== PlasmaNM.Enums.Deactivating
+                                onClicked: {
+                                    if (model.ConnectionState === PlasmaNM.Enums.Activated) {
+                                        networkHandler.deactivateConnection(model.ConnectionPath,
+                                                                             model.DevicePath);
+                                    } else {
+                                        root.connectWifi(model.ConnectionPath, model.DevicePath,
+                                                         model.SpecificPath);
+                                    }
+                                }
+                            }
                         }
                     }
                 }

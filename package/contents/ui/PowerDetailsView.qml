@@ -181,6 +181,7 @@ Item {
 
                         delegate: Components.ActionButton {
                             Layout.fillWidth: true
+                            theme: root.t
                             primary: powerProfiles.activeProfile === modelData
                             text: root.profileLabel(modelData)
                             checkable: true
