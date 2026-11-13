@@ -68,8 +68,8 @@ PlasmaComponents3.Button {
         spacing: root.t.spacingXs
 
         Kirigami.Icon {
-            Layout.preferredWidth: root.icon.width > 0 ? root.icon.width : 0
-            Layout.preferredHeight: root.icon.height > 0 ? root.icon.height : 0
+            Layout.preferredWidth: root.icon.width > 0 ? root.icon.width : Kirigami.Units.iconSizes.small
+            Layout.preferredHeight: root.icon.height > 0 ? root.icon.height : Kirigami.Units.iconSizes.small
             source: root.icon.name
             visible: root.icon.name.length > 0
             color: root.highlightText
