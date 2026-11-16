@@ -33,9 +33,16 @@ Item {
     property real mainContentHeight: 0
 
     implicitWidth: 390
-    implicitHeight: mainContentHeight > 0
+
+    // Never ask for more height than the screen can show. If the content is
+    // taller than this, the main page scrolls instead of cutting items off.
+    readonly property real maxPopupHeight: Screen.desktopAvailableHeight > 0
+        ? Screen.desktopAvailableHeight - Kirigami.Units.gridUnit * 3
+        : Number.POSITIVE_INFINITY
+
+    implicitHeight: Math.min(maxPopupHeight, mainContentHeight > 0
         ? Math.ceil(mainContentHeight + 2 * t.padding)
-        : Kirigami.Units.gridUnit * 32
+        : Kirigami.Units.gridUnit * 32)
 
     Component.onCompleted: {
         koiControllerInstance.checkKoi();
@@ -138,11 +145,21 @@ Item {
                     onPowerRequested: root.currentPage = 3
                 }
 
-                ColumnLayout {
-                    id: mainContent
+                PlasmaComponents3.ScrollView {
+                    id: mainScroll
 
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+                    Layout.preferredHeight: mainContent.implicitHeight
+                    clip: true
+                    contentWidth: availableWidth
+                    background: null
+                    PlasmaComponents3.ScrollBar.horizontal.policy: PlasmaComponents3.ScrollBar.AlwaysOff
+
+                ColumnLayout {
+                    id: mainContent
+
+                    width: mainScroll.availableWidth
                     spacing: root.t.spacing
 
                     RowLayout {
@@ -287,6 +304,7 @@ Item {
                         theme: root.t
                         configuration: root.cfg
                     }
+                }
                 }
             }
         }

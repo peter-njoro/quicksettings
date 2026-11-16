@@ -73,6 +73,7 @@ ColumnLayout {
         Layout.fillWidth: true
         theme: root.theme
         iconName: "brightness-high"
+        inlineMode: true
         label: i18n("Brightness")
         valueText: Math.round(root.screenBrightness / Math.max(1, root.screenBrightnessMax) * 100) + "%"
         from: 0
@@ -87,6 +88,7 @@ ColumnLayout {
         Layout.fillWidth: true
         theme: root.theme
         iconName: "input-keyboard-brightness"
+        inlineMode: true
         label: i18n("Keyboard backlight")
         valueText: Math.round(keyboardControl.brightness
             / Math.max(1, keyboardControl.brightnessMax) * 100) + "%"

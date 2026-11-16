@@ -114,6 +114,7 @@ ColumnLayout {
         visible: root.available
         theme: root.theme
         iconName: root.sink && root.sink.muted ? "audio-volume-muted" : "audio-volume-high"
+        inlineMode: true
         label: i18n("Volume")
         valueText: root.volumePercent + "%"
         from: root.minimalVolume
