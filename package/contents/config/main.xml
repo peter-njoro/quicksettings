@@ -32,7 +32,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
             <max>40</max>
         </entry>
         <entry name="compactSpacing" type="Bool">
-            <default>false</default>
+            <default>true</default>
         </entry>
         <entry name="animations" type="Bool">
             <default>true</default>
