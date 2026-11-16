@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-11-16
+
+### Fixed
+
+- Night Light card no longer flips back to Off right after being turned on.
+  KWin occasionally picks up the kwinrc config-notify late or not at all, so the
+  5s state poll read a stale disabled state and reverted the card. The card now
+  verifies that KWin confirmed the change and retries the config write once
+  before falling back to the periodic poll, and the poll is ignored while a
+  toggle is pending.
+- Drop the generic KWin reconfigure call from the Night Light toggle; KWin's
+  nightlight plugin reloads settings through KConfigWatcher, so it did nothing.
+
 ## [1.0.2] - 2026-11-16
 
 ### Changed

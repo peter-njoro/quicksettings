@@ -13,7 +13,7 @@
         "Id": "com.github.peter-njoro.quicksettings",
         "License": "GPL-3.0-or-later",
         "Name": "Quick Settings",
-        "Version": "1.0.2",
+        "Version": "1.0.3",
         "Website": "https://github.com/peter-njoro/quicksettings",
         "BugReportUrl": "https://github.com/peter-njoro/quicksettings/issues"
     },

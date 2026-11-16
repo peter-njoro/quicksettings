@@ -15,18 +15,57 @@ Item {
     property bool stateAvailable: false
     property bool stateErrorReported: false
     property var requestedNightLightEnabled: null
+    property int verificationAttempts: 0
+    property bool verificationRetryIssued: false
 
     readonly property string stateQuery: "qdbus6 org.kde.KWin "
         + "/org/kde/KWin/NightLight org.freedesktop.DBus.Properties.Get "
         + "org.kde.KWin.NightLight enabled"
-    readonly property string reconfigureCommand: "qdbus6 org.kde.KWin /KWin reconfigure"
 
     implicitWidth: circleButton.implicitWidth
     implicitHeight: circleButton.implicitHeight
+
+    function activeWriteCommand(enable) {
+        return "kwriteconfig6 --file kwinrc --group NightColor "
+            + "--key Active " + (enable ? "true" : "false") + " --type bool --notify";
+    }
+
     function setNightLightEnabled(enable) {
         root.requestedNightLightEnabled = enable;
-        executable.connectSource("kwriteconfig6 --file kwinrc --group NightColor "
-            + "--key Active " + (enable ? "true" : "false") + " --type bool --notify");
+        executable.connectSource(root.activeWriteCommand(enable));
+    }
+
+    function startVerification() {
+        root.verificationAttempts = 0;
+        root.verificationRetryIssued = false;
+        verifyTimer.restart();
+    }
+
+    Timer {
+        id: verifyTimer
+        interval: 1000
+        repeat: true
+        onTriggered: {
+            if (root.requestedNightLightEnabled === null) {
+                verifyTimer.stop();
+                return;
+            }
+            root.verificationAttempts++;
+            if (root.verificationAttempts === 4) {
+                if (!root.verificationRetryIssued) {
+                    root.verificationRetryIssued = true;
+                    root.verificationAttempts = 0;
+                    console.warn("KWin did not confirm the Night Light change, retrying config write");
+                    executable.connectSource(root.activeWriteCommand(root.requestedNightLightEnabled));
+                    return;
+                }
+                console.warn("KWin did not apply the Night Light change, falling back to periodic state");
+                verifyTimer.stop();
+                root.requestedNightLightEnabled = null;
+                return;
+            }
+            verifySource.connectSource(root.stateQuery);
+        }
     }
 
     Plasma5Support.DataSource {
@@ -53,7 +92,39 @@ Item {
 
             root.stateAvailable = true;
             root.stateErrorReported = false;
+
+            if (root.requestedNightLightEnabled !== null) {
+                return;
+            }
+
             root.nightLightEnabled = String(data.stdout || "").trim() === "true";
+        }
+    }
+
+    Plasma5Support.DataSource {
+        id: verifySource
+
+        engine: "executable"
+
+        onNewData: function(sourceName, data) {
+            verifySource.disconnectSource(sourceName);
+
+            if (data["exit code"] !== undefined && Number(data["exit code"]) !== 0) {
+                return;
+            }
+
+            if (root.requestedNightLightEnabled === null) {
+                return;
+            }
+
+            const enabled = String(data.stdout || "").trim() === "true";
+            if (enabled === root.requestedNightLightEnabled) {
+                root.nightLightEnabled = enabled;
+                root.requestedNightLightEnabled = null;
+                root.verificationAttempts = 0;
+                root.verificationRetryIssued = false;
+                verifyTimer.stop();
+            }
         }
     }
 
@@ -70,19 +141,14 @@ Item {
                 console.warn("Night Light command failed:",
                              data.stderr || data["exit status"] || sourceName);
                 root.requestedNightLightEnabled = null;
+                verifyTimer.stop();
                 return;
             }
 
-            if (sourceName === root.reconfigureCommand) {
-                if (root.requestedNightLightEnabled !== null) {
-                    root.nightLightEnabled = root.requestedNightLightEnabled;
-                }
-                root.requestedNightLightEnabled = null;
-                return;
-            }
+            root.nightLightEnabled = root.requestedNightLightEnabled;
 
-            if (root.requestedNightLightEnabled !== null) {
-                executable.connectSource(root.reconfigureCommand);
+            if (!root.verificationRetryIssued) {
+                root.startVerification();
             }
         }
     }
