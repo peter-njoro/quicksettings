@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-11-16
+
+### Changed
+
+- Remove the ScrollView and the screen-height cap so the main page never shows
+  a vertical scroller; the popup height is again exactly the main page content
+  height and Plasma clips it if a very short screen cannot show it.
+- Enable compact spacing by default (main.xml default and the MainView
+  fallback) so the full layout fits in one view; users who explicitly saved
+  the setting keep their choice.
+- Keep the single-row brightness, keyboard backlight and volume sliders from
+  1.0.1.
+
 ## [1.0.1] - 2026-11-16
 
 ### Fixed
