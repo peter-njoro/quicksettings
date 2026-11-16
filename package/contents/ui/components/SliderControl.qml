@@ -10,7 +10,7 @@ import org.kde.kirigami as Kirigami
 
 import "." as Components
 
-ColumnLayout {
+GridLayout {
     id: root
 
     property var theme: null
@@ -35,37 +35,55 @@ ColumnLayout {
 
     Components.Theme { id: fallbackTheme }
 
-    spacing: Math.round(Kirigami.Units.smallSpacing * 0.5)
+    // Puts the icon, track and value on a single row and hides the label.
+    property bool inlineMode: false
 
-    RowLayout {
+    columns: 3
+    columnSpacing: Kirigami.Units.smallSpacing
+    rowSpacing: Math.round(Kirigami.Units.smallSpacing * 0.5)
+
+    Components.IconButton {
+        id: iconButton
+
+        Layout.row: 0
+        Layout.column: 0
+        theme: root.t
+        iconName: root.muted ? "audio-volume-muted" : root.iconName
+        interactive: root.interactive
+        iconSize: Kirigami.Units.iconSizes.small
+        onClicked: root.iconClicked()
+    }
+
+    PlasmaComponents3.Label {
+        visible: root.showLabel && !root.inlineMode
+        Layout.row: 0
+        Layout.column: 1
         Layout.fillWidth: true
-        spacing: Kirigami.Units.smallSpacing
+        text: root.label
+        color: root.t.muted
+        font.pointSize: Kirigami.Theme.smallFont.pointSize
+        textFormat: Text.PlainText
+    }
 
-        Components.IconButton {
-            id: iconButton
-            theme: root.t
-            iconName: root.muted ? "audio-volume-muted" : root.iconName
-            interactive: root.interactive
-            iconSize: Kirigami.Units.iconSizes.small
-            onClicked: root.iconClicked()
-        }
+    PlasmaComponents3.Label {
+        id: valueLabel
 
-        PlasmaComponents3.Label {
-            visible: root.showLabel
-            Layout.fillWidth: true
-            text: root.label
-            color: root.t.muted
-            font.pointSize: Kirigami.Theme.smallFont.pointSize
-            textFormat: Text.PlainText
-        }
+        Layout.row: 0
+        Layout.column: 2
+        Layout.preferredWidth: root.inlineMode ? valueMetrics.width : implicitWidth
+        horizontalAlignment: root.inlineMode ? Text.AlignRight : Text.AlignLeft
+        text: root.valueText
+        color: root.t.text
+        font.pointSize: Kirigami.Theme.smallFont.pointSize
+        font.weight: Font.DemiBold
+        textFormat: Text.PlainText
+    }
 
-        PlasmaComponents3.Label {
-            text: root.valueText
-            color: root.t.text
-            font.pointSize: Kirigami.Theme.smallFont.pointSize
-            font.weight: Font.DemiBold
-            textFormat: Text.PlainText
-        }
+    TextMetrics {
+        id: valueMetrics
+
+        font: valueLabel.font
+        text: "100%"
     }
 
     QQC2.Slider {
@@ -73,6 +91,9 @@ ColumnLayout {
 
         property bool wheelAdjusting: false
 
+        Layout.row: root.inlineMode ? 0 : 1
+        Layout.column: root.inlineMode ? 1 : 0
+        Layout.columnSpan: root.inlineMode ? 1 : 3
         Layout.fillWidth: true
         implicitHeight: 34
         leftPadding: 4
