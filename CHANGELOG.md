@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-11-16
+
+### Fixed
+
+- Keep every control on the main page, including the quick action icons, reachable
+  when the popup would be taller than the available screen height. The popup height
+  is now capped to the screen and the main page scrolls when it doesn't fit.
+
+### Changed
+
+- Show the brightness, keyboard backlight and volume sliders on a single row to
+  shorten the popup.
+
+## [1.0.0] - 2026-11-13
+
 ### Added
 
 - Caffeine card that keeps the screen on and prevents idle sleep, placed below
@@ -58,7 +73,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synchronize the focus card with the real Plasma do not disturb state and actually toggle it via the plasmashell notification shortcut.
 - Update the focus card icon immediately when do not disturb is toggled and ignore stale state reads.
 
-## [1.0.0] - 2026-11-04
+## Initial release
 
 ### Added
 
